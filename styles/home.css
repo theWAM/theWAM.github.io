@@ -1,0 +1,23 @@
+body {
+  background-color: #eee;
+}
+
+.jumbotron {
+    text-align: center; 
+/*    margin-top: 10%;*/
+    border-radius: 50px;
+/*    height: 100%;*/
+  
+}
+
+#bigText {
+  font-size: 5em;
+}
+
+a, a:hover, a:active, a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+img {
+}

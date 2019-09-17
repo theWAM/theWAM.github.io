@@ -1,0 +1,95 @@
+/*all css animations------------------------------*/
+
+@keyframes fade-in {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+@keyframes bgdark {
+    0% {background-color: white;}
+    100% {background-color: #d0d0d0}
+}
+
+/*-----------------------------------------------*/
+
+body {
+  background-color: #eee;
+}
+
+.jumbotron {
+	background-color: #f4511e; /* Orange */
+    color: #ffffff;
+    padding: 100px 25px;
+    transition: 1s;
+}
+
+.container-fluid {
+	padding: 60px 50px;
+}
+
+.bg-grey {
+	background-color: #f6f6f6;
+}
+
+.btn-warning, .btn-warning:active, .btn-warning:visited {
+    background-color: #f4511e !important;
+}
+.btn-warning:hover {
+	background-color: #e74411 !important;
+}
+
+.btn-gray, .btn-gray:active, .btn-gray:visited {
+	background-color: #666666;
+	color: white;
+}
+
+.btn-gray:hover {
+	background-color: #595959;
+	color: white;
+}
+
+.btn-lightgray, .btn-lightgray:active, .btn-lightgray:visited {
+	background-color: #999999;
+	color: white;
+}
+
+.btn-lightgray:hover {
+	background-color: #8c8c8c;
+	color: white;
+}
+
+footer {
+	text-align: center;
+	color: #666;
+	transition: 1s;
+}
+
+footer:hover {
+	color: black;
+}
+
+.text-group {
+    height: 100vh;
+}
+
+#name {
+    font-size: 60px;
+}
+
+#logo {
+    height: 100vh;
+    position: absolute;
+    width: 100%;
+    background: white;
+    animation: fade-in 0.5s linear 1.2s 1 reverse;
+    animation-fill-mode: forwards;
+}
+
+#logo>p {
+    text-align: center;
+    padding-top: 30vh;
+}
+
+#logo>img {
+    width: 100%;
+}
