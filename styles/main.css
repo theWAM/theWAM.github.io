@@ -17,10 +17,18 @@ body {
 }
 
 .jumbotron {
-	background-color: #f4511e; /* Orange */
+	background-image: url('../media/gradientsideflip.png');/* Orange */
     color: #ffffff;
     padding: 100px 25px;
     transition: 1s;
+}
+
+#jumbo {
+    height: 100vh;
+}
+
+a {
+    color: white;
 }
 
 .container-fluid {
@@ -92,4 +100,10 @@ footer:hover {
 
 #logo>img {
     width: 100%;
+}
+
+#button {
+    color: white;
+    background-image: url('../media/gradientsiderelong.png');
+    border: black;
 }
