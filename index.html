@@ -21,69 +21,84 @@
     <!--   AOS scroll reveal css import  -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
-<body class="change-bg-gray">
+<body>
     <!--   AOS scroll reveal js import  -->
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script>AOS.init();</script>
     
     <!--Site-in-progress code-->
+<!--
     <div id="jumbo" class="jumbotron">
         <h1>The page is undergoing changes right now! Come back soon</h1>
         
         <a id="button" class="btn btn-lg btn-block"
            href="https://linktr.ee/wood_mont" role="button">Here's where you can find me</a>
     </div>
-<!--
+-->
+    <div id="logo" class="jumbotron" data-aos="fade-down"
+         data-aos-anchor-placement="center-bottom">
+	  <img class="container-fluid" src="media/colorfulborder.png">
+	</div>
     
-    <div id="logo">
-        <p><img src="media/colorful.png" class="img-fluid"></p>  Image wrapped in <p> tag to center on screen 
+    <div id="jumbo-footer">
+        <a href="#scroll-target">Scroll Down<br> ▼</a>
     </div>
+    
+    <div id="everything">
+    <!---------------------------------------------->
+    <!--    Dummy scroll target -->
+    <div id="scroll-target"></div>
 
     <div class="jumbotron text-center text-group">
-        <h1 id="name" data-aos="fade-left"
-         data-aos-anchor-placement="top-bottom"> Woody Allen Montilus </h1>
+        <h1 id="name"> Woody Allen Montilus </h1>
 
-        <p data-aos="fade-left" data-aos-easing="linear"
-     data-aos-duration="1000">Welcome to my webpage! Here you can find any projects that I'm working on, as well as my contact information and more info about me!</p>
+        <p>Welcome to my webpage! Here you can find any projects that I'm working on, as well as my contact information and more info about me!</p>
 
     </div>
     
+<!--
     <div class="container-fluid bg-grey text-group" data-aos="fade-left"
          data-aos-anchor-placement="top-bottom">
         <h2>What I'm Working On</h2>
         <h4></h4>
     </div>
+-->
     
-    <div class="container-fluid text-group" data-aos="fade-left"
-         data-aos-anchor-placement="top-bottom">
-        <h2>#1 Learner</h2>
-        <h4>I'm an 19 senior at Georgia State University, and soon-to-be Bachelor of Computer Science </h4>
-        <h4>I have a passion for creating music and art and I aim to build software that allow me and many of others to do just that.</h4>
-    </div>
-
-    <div class="container-fluid bg-grey text-group" data-aos="fade-left"
-         data-aos-anchor-placement="top-bottom">
-        <h2>Projects</h2>
-        <h4>I have worked in more powerful languages like Java and Python, but my journey along coding began with HTML/CSS/JS</h4>
-
-        <a role="button" class="btn btn-warning btn-lg btn-block " target="_blank" href="https://github.com/theWAM">Check out my GitHub</a>
+    <div class="container-fluid text-group" data-aos="fade-right"
+         data-aos-anchor-placement="center-bottom">
+        <div>
+            <h1>#1 Learner</h1>
+            <h4>I'm an 19 senior at Georgia State University, and soon-to-be Bachelor of Computer Science </h4>
+            <h4>I have a passion for creating music and art and I aim to build software that allow me and many of others to do just that.</h4>
+        </div>
     </div>
 
     <div class="container-fluid text-group" data-aos="fade-left"
          data-aos-anchor-placement="center-bottom">
-        <h2>My Documents</h2>
+        <div>
+            <h1>Projects</h1>
+            <h4>I have worked in more powerful languages like Java and Python, but my journey along coding began with HTML/CSS/JS</h4>
 
-        <a role="button" class="btn btn-warning btn-lg btn-block" target="_blank" href="links/ResumeNov8.pdf">My Resume</a>
+            <a role="button" class="btn btn-warning btn-lg btn-block " target="_blank" href="https://github.com/theWAM">Check out my GitHub</a>
+        </div>
+    </div>
+
+    <div class="container-fluid text-group" data-aos="fade-right"
+         data-aos-anchor-placement="center-bottom">
+        <div>
+            <h1>My Documents</h1>
+
+            <a role="button" class="btn btn-warning btn-lg btn-block" target="_blank" href="links/ResumeNov8.pdf">My Resume</a>
 
 
-        <a role="button" class="btn btn-gray btn-lg btn-block" target="_blank" href="links/CoverLetterNov8.pdf">My Cover Letter</a>
-
+            <a role="button" class="btn btn-warning btn-lg btn-block" target="_blank" href="links/CoverLetterNov8.pdf">My Cover Letter</a>
+        </div>
+    </div>
     </div>
 
     <footer>
         © Woody Allen Montilus 2018
     </footer>
--->
 
     <!-- Scripts -->
     <script src="scripts/index.js"></script>

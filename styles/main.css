@@ -5,6 +5,15 @@
     100% {opacity: 1;}
 }
 
+@keyframes logo-fade {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+@keyframes back-fade-in {
+    0% {}
+    100% {background-image: url('../media/logobackskewed.png');}
+}
 @keyframes bgdark {
     0% {background-color: white;}
     100% {background-color: #d0d0d0}
@@ -12,8 +21,13 @@
 
 /*-----------------------------------------------*/
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-  background-color: #eee;
+    background-image: url('../media/gradientsideflip.png');
+    color: white;
 }
 
 .jumbotron {
@@ -23,61 +37,78 @@ body {
     transition: 1s;
 }
 
+/*
 #jumbo {
     height: 100vh;
 }
+*/
+
+
+#jumbo-footer {
+    background: none;
+}
+#jumbo-footer>a {
+    color: white;
+    background: none;
+}
+#jumbo-footer>a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+/*"Scroll Down" text, which is set to bottom of jumbotron*/
+#jumbo-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    min-height: 50px;
+    clear: both;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    animation: fade-in 1s linear 2.5s 1 normal;
+    animation-fill-mode: forwards;
+}
 
 a {
-    color: white;
+    color: purple;
+
+}
+
+a#button {
+    background-image: url('../media/logobackskewed.png') !important;
 }
 
 .container-fluid {
 	padding: 60px 50px;
 }
 
-.bg-grey {
-	background-color: #f6f6f6;
-}
-
 .btn-warning, .btn-warning:active, .btn-warning:visited {
-    background-color: #f4511e !important;
-}
-.btn-warning:hover {
-	background-color: #e74411 !important;
-}
-
-.btn-gray, .btn-gray:active, .btn-gray:visited {
-	background-color: #666666;
-	color: white;
-}
-
-.btn-gray:hover {
-	background-color: #595959;
-	color: white;
-}
-
-.btn-lightgray, .btn-lightgray:active, .btn-lightgray:visited {
-	background-color: #999999;
-	color: white;
-}
-
-.btn-lightgray:hover {
-	background-color: #8c8c8c;
-	color: white;
+    border: white;
+    background-image: url('../media/logobackskewed.png') !important;
 }
 
 footer {
 	text-align: center;
-	color: #666;
+	color: white;
 	transition: 1s;
 }
 
 footer:hover {
-	color: black;
+    color: black;
+	background-color: white;
 }
 
 .text-group {
     height: 100vh;
+}
+
+.text-group>div {
+    background-color: rgba(225,225,225,0.3);
+    
+    padding: 80px 30px;
+    border-radius: 50px;
 }
 
 #name {
@@ -85,25 +116,34 @@ footer:hover {
 }
 
 #logo {
-    height: 100vh;
-    position: absolute;
-    width: 100%;
-    background: white;
-    animation: fade-in 0.5s linear 1.2s 1 reverse;
-    animation-fill-mode: forwards;
-}
-
-#logo>p {
+/*    height: 100vh;*/
+/*    position: absolute;*/
     text-align: center;
-    padding-top: 30vh;
+    animation: back-fade-in 1.5s linear .5s 1 normal;
+    animation-fill-mode: forwards;
+    padding: 0px;
+    
 }
 
 #logo>img {
-    width: 100%;
+    opacity: 0;
+    height: 100vh;
+    margin: none;
+    padding: none;
+    animation: fade-in 2s linear 1s 1 normal;
+    animation-fill-mode: forwards;
 }
+/*
 
-#button {
+button {
     color: white;
     background-image: url('../media/gradientside.png');
     border: black;
 }
+*/
+
+/*
+#btn {
+    background-image: url('../media/gradient.png');
+    
+}*/
