@@ -37,15 +37,9 @@ body {
     transition: 1s;
 }
 
-/*
-#jumbo {
-    height: 100vh;
-}
-*/
-
-
 #jumbo-footer {
     background: none;
+    z-index: 999;
 }
 #jumbo-footer>a {
     color: white;
@@ -53,6 +47,7 @@ body {
 }
 #jumbo-footer>a:hover {
     color: black;
+    transition: .3s;
     text-decoration: none;
 }
 
@@ -73,7 +68,13 @@ body {
 
 a {
     color: purple;
+    transition: 0.5s;
+}
 
+.text-group>img {
+    height: 200px;
+    width: auto;
+    
 }
 
 a#button {
@@ -86,7 +87,12 @@ a#button {
 
 .btn-warning, .btn-warning:active, .btn-warning:visited {
     border: white;
-    background-image: url('../media/logobackskewed.png') !important;
+    background-color: purple;
+    transition: .5s;
+}
+
+a:hover {
+    color: orange; 
 }
 
 footer {
@@ -106,7 +112,6 @@ footer:hover {
 
 .text-group>div {
     background-color: rgba(225,225,225,0.3);
-    
     padding: 80px 30px;
     border-radius: 50px;
 }
@@ -116,8 +121,6 @@ footer:hover {
 }
 
 #logo {
-/*    height: 100vh;*/
-/*    position: absolute;*/
     text-align: center;
     animation: back-fade-in 1.5s linear .5s 1 normal;
     animation-fill-mode: forwards;
@@ -133,17 +136,3 @@ footer:hover {
     animation: fade-in 2s linear 1s 1 normal;
     animation-fill-mode: forwards;
 }
-/*
-
-button {
-    color: white;
-    background-image: url('../media/gradientside.png');
-    border: black;
-}
-*/
-
-/*
-#btn {
-    background-image: url('../media/gradient.png');
-    
-}*/
