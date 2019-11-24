@@ -26,15 +26,15 @@ html {
 }
 
 body {
-    background-image: url('../media/gradientsideflip.png');
+    background-image: linear-gradient(to bottom right, purple,orange);
     color: white;
 }
 
 .jumbotron {
-	background-image: url('../media/gradientsideflip.png');/* Orange */
     color: #ffffff;
     padding: 100px 25px;
     transition: 1s;
+    background: transparent !important;
 }
 
 #jumbo-footer {
@@ -49,6 +49,14 @@ body {
     color: black;
     transition: .3s;
     text-decoration: none;
+}
+
+#nav {
+    margin: 2% 5%;
+}
+
+#nav>button {
+    background: transparent;
 }
 
 /*"Scroll Down" text, which is set to bottom of jumbotron*/
@@ -67,10 +75,20 @@ body {
 }
 
 a {
-    color: purple;
+    color: white;
     transition: 0.5s;
+    text-decoration: none;
 }
 
+a:visited a:active{
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    text-decoration: none;
+    color: orange; 
+}
 .text-group>img {
     height: 200px;
     width: auto;
@@ -91,10 +109,6 @@ a#button {
     transition: .5s;
 }
 
-a:hover {
-    color: orange; 
-}
-
 footer {
 	text-align: center;
 	color: white;
@@ -107,7 +121,7 @@ footer:hover {
 }
 
 .text-group {
-    height: 100vh;
+/*    height: */
 }
 
 .text-group>div {
@@ -135,4 +149,12 @@ footer:hover {
     padding: none;
     animation: fade-in 2s linear 1s 1 normal;
     animation-fill-mode: forwards;
+}
+
+.pro-view>img {
+    width: 50vh;
+}
+
+.pro-view>h2 .pro-view>p {
+    text-align: center;
 }
