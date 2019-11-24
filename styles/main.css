@@ -74,6 +74,30 @@ body {
     animation-fill-mode: forwards;
 }
 
+#myBtn {
+    background: transparent;
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: rgba(0,0,0,0.2);
+    color: rgba(0,0,0,0.99); /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 10px 20px; /* Some padding */
+    border-radius: 30px; /* Rounded corners */
+    font-size: 18px; /* Increase font size */
+    transition: 1s;
+    
+}
+
+#myBtn:hover {
+    color: orange;
+  background-color: rgba(0,0,0,0.5); /* Add a dark-grey background on hover */
+}
+
 a {
     color: white;
     transition: 0.5s;
@@ -95,10 +119,6 @@ a:hover {
     
 }
 
-a#button {
-    background-image: url('../media/logobackskewed.png') !important;
-}
-
 .container-fluid {
 	padding: 60px 50px;
 }
@@ -117,11 +137,12 @@ footer {
 
 footer:hover {
     color: black;
-	background-color: white;
+	background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.1));
 }
 
 .text-group {
 /*    height: */
+    text-align: center;
 }
 
 .text-group>div {
@@ -152,9 +173,48 @@ footer:hover {
 }
 
 .pro-view>img {
-    width: 50vh;
+    width: 70vh;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.pro-view>h2 .pro-view>p {
-    text-align: center;
+.pro-view {
+/*    height: 70vh;*/
+    margin-top: 50px;
+    margin-bottom: 80px;
+    
+}
+
+#screenies {
+/*    display: flex;*/
+/*    height: 80vh;*/
+}
+
+#screenies>img {
+    height: 400px;
+    
+    display: inline;
+/*    margin: 10px;*/
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text-based {
+    margin: 20px;
+    padding: 20px;
+    border-style: solid;
+    border-radius: 20px;
+
+}
+
+.school>h2 {
+    color: rgba(12,48,130);
+}
+
+.school>#lighter {
+    color: rgba(36,93,164);
+}
+
+.school>img {
+    height: 200px;
 }
