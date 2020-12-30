@@ -310,6 +310,18 @@ footer:hover {
     }
 }
 
+@media screen and (max-width: 450px) {
+    #logoBall {
+        height: 125px;
+        margin-left: 5px;
+    }
+    
+    .school > img {
+        height: 150px;
+    }
+    
+}
+
 @media screen and (max-width: 725px) { 
     #logo {
         height: 110px;
