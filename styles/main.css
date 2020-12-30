@@ -129,6 +129,14 @@ a:hover {
     transition: .5s;
 }
 
+#github {
+    background-color: rgb(142, 42, 73);
+    transition: .5s;
+}
+#github:hover {
+    background-color: orange;
+}
+
 footer {
 	text-align: center;
 	color: white;
@@ -217,4 +225,94 @@ footer:hover {
 
 .school>img {
     height: 200px;
+}
+
+
+
+.flip-card {
+    background-color: transparent;
+    height: 260px;
+    perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+#flip:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+#flip:hover .flip-card-front {
+    opacity: 0;
+    transition-delay: 0.5s;
+    transition: 0.5s;
+}
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+    transition: 0.5s;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+ 
+
+}
+
+/* Style the back side */
+.flip-card-back {
+/*  background-color: rgba(250,250,250, 0.2);*/
+  transform: rotateY(180deg);
+}
+
+#logo {
+    height: 150px;
+}
+
+#acc-small, #logoBall {
+    display: none;
+}
+
+@media screen and (max-width: 550px) { 
+    .flip-card {
+        background-color: transparent;
+        height: 350px;
+        perspective: 1000px; /* Remove this if you don't want the 3D effect */
+    }
+    
+    ul li {
+        font-size: 18px;
+    }
+    #acc-small, #logoBall {
+        display: inherit;
+    }
+    #logoBall {
+        margin-left: 55px;
+    }
+    #acc-big, #logo {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 725px) { 
+    #logo {
+        height: 110px;
+    }
+    
 }
