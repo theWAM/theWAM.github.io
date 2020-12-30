@@ -5,6 +5,11 @@
     100% {opacity: 1;}
 }
 
+@keyframes fade-in-with-substance {
+    0% {opacity: 0; display: none; z-index: -999;}
+    100% {opacity: 1;}
+}
+
 @keyframes logo-fade {
     0% {opacity: 0;}
     100% {opacity: 1;}
@@ -289,6 +294,18 @@ footer:hover {
     display: none;
 }
 
+#small-warning {
+    display: none;
+}
+
+
+@media screen and (max-width: 725px) { 
+    #logo {
+        height: 110px;
+    }
+    
+}
+
 @media screen and (max-width: 550px) { 
     .flip-card {
         background-color: transparent;
@@ -322,9 +339,16 @@ footer:hover {
     
 }
 
-@media screen and (max-width: 725px) { 
-    #logo {
-        height: 110px;
+@media screen and (max-width: 400px) {
+    #small-warning {
+        z-index: 1000;
+        display: block;
+        position: fixed;
+        height: 100vh; 
+        background-color: rgba(0,0,0,0.7);
+        padding-top: 280px;
+        animation: fade-in-with-substance 1s linear 2.5s 1 reverse;
+        animation-fill-mode: forwards;
     }
-    
 }
+
