@@ -1,4 +1,4 @@
-/*all css animations------------------------------*/
+all css animations------------------------------
 
 @keyframes fade-in {
     0% {opacity: 0;}
@@ -30,9 +30,11 @@ html {
     scroll-behavior: smooth;
 }
 
-body {
-    background-image: linear-gradient(to bottom right, purple,orange);
+nav, #info {
+    /* background-image: linear-gradient(to bottom right, purple,orange); */
+    background-color: rgb(189,116,183);
     color: white;
+    border-radius: 10px 10px;
 }
 
 .jumbotron {
@@ -111,7 +113,7 @@ a {
 
 a:visited a:active{
     text-decoration: none;
-    color: white;
+    color: rgb(190, 124, 0);
 }
 
 a:hover {
@@ -121,6 +123,12 @@ a:hover {
 .text-group>img {
     height: 200px;
     width: auto;
+    
+}
+
+.card>img {
+    height: 200px;
+    width: 200px;
     
 }
 
@@ -144,13 +152,12 @@ a:hover {
 
 footer {
 	text-align: center;
-	color: white;
-	transition: 1s;
+	color: black;
+	transition: .5s;
 }
 
 footer:hover {
-    color: black;
-	background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.1));
+    color: orange;
 }
 
 .text-group {

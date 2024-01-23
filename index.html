@@ -1,275 +1,347 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Profile Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Woody Portfolio</title>
+  
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+    <!-- AOS CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  
+    <!-- <link href="styles/main.css" rel="stylesheet"> -->
+    <link href="styles/new.css" rel="stylesheet">
 
-    <meta charset="utf-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="styles/main.css">
-
-    <!--   AOS scroll reveal css import  -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/82ac403f21.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!--   AOS scroll reveal js import  -->
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <script>AOS.init();</script>
-    
-<!--    <div id="everything">-->
-    <!---------------------------------------------->
-    <!--    Dummy scroll target -->
-<!--    <div id="scroll-target"></div>-->
+  <!--   AOS scroll reveal js import  -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init();</script>
 
-    <div id="small-warning">
-        <div class="jumbotron text-center"> <h1>Rotate phone for a better experience!</h1></div>
-    </div>
-    
-    <div class="jumbotron text-center text-group" data-aos="fade-down"
-         data-aos-anchor-placement="center-bottom">
-        
-        <h1 id="name"> Woody Allen Montilus </h1><small>U.S. citizen</small>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-        <p>(770)-371-4422  |  woodablu@gmail.com</p>
-        <p><a target="_blank" href="https://github.com/theWAM">www.github.com/theWAM</a>  |  <a target="_blank" href="https://www.linkedin.com/in/woody-montilus/">www.linkedin.com/in/woody-montilus</a></p>
-        
-        <div id="nav" class="container-fluid">
-            <button class="btn btn-lg"><a href="#experience">Experience</a></button>
-            <button class="btn btn-lg"><a href="#projects">Projects</a></button>
-            <button class="btn btn-lg"><a href="#education">Education</a></button>
-            <button class="btn btn-lg"><a href="#volunteer">Volunteer Work</a></button>
-            <button class="btn btn-lg"><a href="#skills">Skills & Abilites</a></button>
-            
+    <nav id="nav" class="navbar navbar-expand-md sticky-top border-bottom" data-bs-theme="dark">
+      <div class="container-fluid">
+        <a class="navbar-brand d-md-none" href="#">WAM</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarToggler">
+          <ul class="navbar-nav flex-grow-1 justify-content-between me-auto mb-2 mb-lg-0">
+            <li class="nav-item"></li>
+            <li class="nav-item"></li>
+            <li class="nav-item"></li>
+            <li class="nav-item"></li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About Me</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#experience">Experience</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#education">Education</a>
+            </li>
+            <li class="nav-item"></li>
+          </ul>
         </div>
-
-    </div>
-    
-    <button onclick="topFunction()" id="myBtn" title="Go to top">↑</button>
-    
-    
-    
-    <div id="experience" class="container-fluid text-group">
-        <div>
-            <h1>Experience</h1>
-            
-            <div id="flip" class="text-based" data-aos="fade-right">
-                <div class="flip-card">
-                  <div class="flip-card-inner">
-                    <div class="flip-card-front text-center">
-                      <img id="logo" data-aos="fade-right"
-             data-aos-anchor-placement="center-bottom" src="media/lnrs100.png">
-                        <img id="logoBall" class="img-fluid" data-aos="fade-right"
-             data-aos-anchor-placement="center-bottom" src="media/lnrsLogo.png" style="height:150px;">
-                        <h2 data-aos="fade-right"
-             data-aos-anchor-placement="center-bottom">SOFTWARE DEVELOPER INTERN</h2>
-                                <h4 data-aos="fade-right"
-             data-aos-anchor-placement="center-bottom">LexisNexis Risk Solutions, Alpharetta, GA</h4>
-                                <p data-aos="fade-right"
-             data-aos-anchor-placement="center-bottom">May 2020 - July 2020</p>
-                    </div>
-                    <div class="flip-card-back">
-                        <h1 id="acc-big">Accomplishments</h1><br>
-                        <h2 id="acc-small">Accomplishments</h2>
-                        <ul style="font-size: 20px;">
-                            <li>
-                                Developed first cross-team centralized logging dashboard in Kibana, drastically cutting diagnosis time for serious issues across applications
-                            </li><br>
-                            
-                            <li>
-                                Introduced Kibana grammar, Vega-lite, to company, facilitating the creation of high impact projects
-                            </li><br>
-                            
-                            <li>
-                                Unified remote interns with bonding meetings, volunteer work, and regular check-ins
-                            </li>
-                        </ul>
-                    </div>
-                  </div>
-                </div>
+      </div>
+    </nav>
+    <!-- <nav id="nav" class="navbar navbar-expand-md sticky-top border-bottom" data-bs-theme="dark">
+        <div class="container">
+          <a class="navbar-brand d-md-none" href="#">
+            <svg class="bi" width="24" height="24"><use xlink:href="#aperture"></use></svg>
+            WAM
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="#offcanvas" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="#offcanvas" aria-labelledby="#offcanvasLabel">
+            <div class="offcanvas-body">
+              <ul class="navbar-nav flex-grow-1 justify-content-between me-auto mb-2 mb-lg-0">
+                <li class="nav-item"></li>
+                <li class="nav-item"></li>
+                <li class="nav-item"></li>
+                <li class="nav-item"></li>
+                <li class="nav-item"><a class="nav-link" href="#about">About Me</a></li>
+                <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+                <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
+                <!\-- <li class="nav-item"><a target="_blank" class="nav-link">Contact</a></li> -\->
+                <li class="nav-item"></li>
+                <!-\- <li class="nav-item"><a class="nav-link" href="#">
+                  <svg class="bi" width="24" height="24"><use xlink:href="#cart"></use></svg>
+                </a></li> --\>
+              </ul>
             </div>
-            
-            <div id="flip" class="text-based" data-aos="fade-right" style="height: 200px;">
-                <div class="flip-card">
-                  <div class="flip-card-inner">
-                    <div class="flip-card-front text-center">
-                        <h2 data-aos="fade-right"
-             data-aos-anchor-placement="center-bottom">SOFTWARE DEVELOPER INTERN</h2>
-                                <h4 data-aos="fade-right"
-             data-aos-anchor-placement="center-bottom">Your Company Here!</h4>
-                                <p data-aos="fade-right"
-             data-aos-anchor-placement="center-bottom">Summer 2021</p>
-                    </div>
-                    <div class="flip-card-back">
-                        <h1>If you feel like we're a match, contact me!</h1><br>
-                        <h3><a onclick="topFunction()" style="text-decoration: underline"><b>Scroll up</b></a> for contact info</h3>
-                    </div>
-                  </div>
-                </div>
-            </div>
+          </div>
         </div>
-        
+      </nav> -->
     
-    </div>
-    
-    <div id="projects" class="container-fluid text-group">
-        <div>
-            <h1 class="text-center">Projects</h1>
-            
-            <div class="pro-view text-center" data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">
-                <h2>Mushu</h2>
-                <img src="media/mushu.gif" class="img-responsive">
-                <p>Django web app that records user goals and tracks completion  (Python / HTML / CSS / JS)</p>
+    <div class="row container-fluid" id="content">
+      <div class="col-md-1 d-none d-sm-block"></div>
+    <div class="col-md-3 well">
+      <div id="info">
+        <img src="media/profilepic.jpg" class="img-fluid d-none d-md-block" id="profile" style="border-radius: 10px 10px 0px 0px">
+        <header>
+            <h3 class="display-6 fw-bold text-body-emphasis text-center" style="padding-top: 20px;">Woody Allen Montilus</h3>
+            <h4 class="text-center">Java/Python Developer</h4><br>
+        </header>
+          <p class="text-center text-muted container-fluid">
+            <a href="mailto: woodablu98@gmail.com">
+              <i class="fa-regular fa-envelope fa-2xl"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/woody-montilus/" target="_blank">
+              <i class="fa-brands fa-linkedin fa-2xl"></i>
+            </a>
+            <a href="https://github.com/theWAM" target="_blank">
+              <i class="fa-brands fa-github fa-2xl"></i>
+            </a>
+          </p>
+          <p class="text-center text-muted container-fluid" style="color: white;"><i class="fa-solid fa-phone fa-xl"></i> (678)-926-8929</p>
+        </div>
+        <br><br>
+        <div class="d-none col-sm-block">
+          <h3 class="text-center ">Skills Acquired</h3>
+          <ol class="row" id="skills">
+            <div class="col-6">
+              <li>Python</li>
+              <li>Java</li>
+              <li>Git</li>
+              <li>HTML/CSS</li>
+              <li>JavaScript</li>
+              <li>AWS</li>
+              <li>Docker</li>
+              <li>Spring</li>
+              <li>Django</li>
+              <li>React</li>
+              <li>HTTP</li>
+              <li>Software Security</li>
+              <li>Test Driven Development</li>
+              <li>Distributed Systems</li>
             </div>
-            
-            <div class="pro-view text-center" data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">
-                
-                <h2>Elevator Pitch (Hackathon Winner)</h2>
-                <div id="screenies" class="container">
-                    <img src="media/pitch.png" class="img-fluid float-left">
-                    <img src="media/catch.png" class="img-fluid float-right">
-                </div>
-                <p>Django based web app imitating the Tinder model; swipe left and right on proposed ideas from users (Python / HTML / CSS / Javascript)</p>
+            <div class="col-6">
+              <li>Agile Development</li>
+              <li>CI/CD Practices</li>              
+              <li>SQL</li>
+              <li>Elastic Stack</li>
+              <li>Jenkins</li>
+              <li>Splunk</li>
+              <li>Azure</li>
+              <li>Angular</li> 
+              <li>Node.js</li>
+              <li>Terraform</li>
+              <li>Open AI</li>
+              <li>Nessus</li>
+              <li>Linux</li>
             </div>
-            
-            <div class="pro-view text-center" data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">
-                <h2>AutoSAI</h2>
-                <img src="media/AutoSAI.gif" class="img-responsive">
-                <p>Autosave key controller by mouse clicks; applicable to 3rd party applications (Python)</p>
-            </div>
-            
-            <div class="pro-view text-center" data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">
-                <h2>TextEm!</h2>
-                <img src="media/TextEm.gif" class="img-responsive">
-                <p>Makes texting through a laptop accessible to Windows users via email (Python)</p>
-            </div>
-
-            <a id="github" role="button" class="btn btn-warning btn-lg btn-block" target="_blank" href="https://github.com/theWAM">Check out my GitHub</a>
+          </ol>
         </div>
     </div>
-        
-    <div id="education" class="container-fluid text-group">
-        <div>
-            <h1>Education</h1>
-<!--
-            <h4>I'm an 19 junior at Georgia State University, and soon-to-be Bachelor of Computer Science </h4>
-            <h4>I have a passion for creating music and art and I aim to build software that allow me and many of others to do just that.</h4>
--->
-            <div class="school text-based" data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">
-                <img src="media/gsu.png" class="img-fluid">
-                <h2 id="lighter">BACHELOR OF BUSINESS IN COMPUTER SCIENCE</h2>
-                <h4>Georgia State University, Atlanta, GA</h4>
-                <p>2019-2021</p>
-            </div>
-            
-            
-            <div class="school text-based" data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">
-                <img src="media/ung.png" class="img-fluid">
-                <h2>ASSOCIATE OF BUSINESS IN COMPUTER SCIENCE</h2>
-                <h4>University of North Georgia, Gainesville, GA</h4>
-                <p>2016-2019</p>
-            </div>
-            
-        </div>
-    </div>
-
-    <div id="volunteer" class="container-fluid text-group">
-        <div>
-            <h1>Volunteer Work</h1>
-            
-            <div class="text-based" data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">
-                <h2 data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">VICE PRESIDENT</h2>
-                <h3 data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">UNG CODING WARRIORS</h3>
-                <p data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">University of North Georgia</p>
-            </div>
-            
-            <div class="text-based" data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">
-                <h2 data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">LEAD FRONTEND DEVELOPER</h2>
-                <h3 data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">NVISION DATA MANAGEMENT,</h3> <p data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">Good Samaritan Haitian Alliance Church</p>
-            </div>
-        </div>
-    </div>
-        
-    <div id="skills" class="container-fluid text-group">
-        <div>
-            <h1>Skills & Abilities</h1>
-            
-            <div class="text-based" data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">
-                <h3 data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">Proficient in <b>Python</b></h3>
-                <h3 data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">Practiced with Cloud Computing via <b>AWS</b></h3>
-                <h3 data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">Proficient in <b>Java</b></h3>
-                <h3 data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">Advanced in <b>HTML / CSS/ JS</b></h3>
-                <h3 data-aos="fade-right"
-         data-aos-anchor-placement="center-bottom">Comfortable with <b>Git</b></h3>
-            </div>
-        </div>
-    </div>
-        
-<!--
-        <a role="button" class="btn btn-warning btn-lg btn-block" target="_blank" href="links/ResumeNov8.pdf">My Resume</a>
-
-
-            <a role="button" class="btn btn-warning btn-lg btn-block" target="_blank" href="links/CoverLetterNov8.pdf">My Cover Letter</a>
--->
-<!--    </div>-->
-    
     
 
-    <footer>
-        © Woody Allen Montilus 2020
-    </footer>
+  
+  <div class="col-md-8 well" id="body">
+    <!-- <br> -->
+    <!-- <section>
+      <h2>Current Role</h2>
+      <p>
+        Senior Software Developer @ <a href="https://getclaridy.com/">Claridy</a>
+      </p>
+  </section> -->
+  <br>
     
-    <script>
-        //Get the button:
-        mybutton = document.getElementById("myBtn");
+    <section>
+        <h2>About Me</h2><br>
+        <p data-aos="fade-right"
+        data-aos-anchor-placement="center-bottom">
+          Hi all! I am an accomplished Software Engineer with experience primarily in REST API design and maintenance using Java and Python. I am currently aggressively looking for mainly software engineer roles, application software positions in innovative tech, full stack developer positions and security software positions.
 
-        // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function() {scrollFunction()};
+          <br><br>I've specialized in automating tasks/solutions and creating robust RESTful UI's to access tools and databases. My experience includes but is not limited to cloud security, multi-level performance testing, and front end development. I'm also capable and comfortable with presenting solutions to others and collaboration across teams. I’m always down to learn new tech, languages, and frameworks!
 
-        function scrollFunction() {
-          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            mybutton.style.display = "block";
-          } else {
-            mybutton.style.display = "none";
-          }
-        }
+          <br><br>I've served as a leader of nVision Ministry's technology team as the Principal Frontend Developer for a time, and have also supported my educational institution's communities as the Vice President of my college's Coding Warriors group and as the Executive Advisor of the school's Black Student Union.
 
-        // When the user clicks on the button, scroll to the top of the document
-        function topFunction() {
-          document.body.scrollTop = 0; // For Safari
-          document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-        }
-    </script>
+          <br><br>Outside of work, I enjoy making music and digital art, and learning new recipes to try making.
+        </p>
+        <div id="experience"></div>
+        <br>
+        <!-- <div class="card card-subtitle card-body">
+           <ul style="color: rgb(99, 99, 99); margin-bottom: 0px;">
+            <li><p>Microbial pathogenesis in host-pathogen interface</p></li>
+            <li><p>Antimicrobial resistance in pathogens to develop vaccines and drugs</p></li>
+              <li><p>Host immune memory against patterns in antigenic variation to understand rapid pathogenic adaptability </p></li>
+          </ul>
+        </div> -->
+    </section>
+    <br><br>
+    <section>
+        <h2>Experience</h2>
+        <div class="accordion">
+          <div class="accordion-item" data-aos="fade-left"
+          data-aos-anchor-placement="bottom-bottom">
+            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                <img src="./media/tmo.svg.png" class="">
+                <div class="">Software Engineer - T-Mobile</div>
+              </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+              <div class="accordion-body">
+                <ul>
+                  <li><strong>Shortened performance testing times across apps by 80%</strong> by developing and deploying natural language processing for Slackbots to automate multiple test runs and quickly return results within the Slack UI. Created the NLP using Python to track and build a library of commonly used words/phrases for testing as well as run tests with specific parameters and generate performance charts.</li>
+                  <li>Increased safety and efficiency of app scaling across org by creating Python scripts that intelligently maintain live versions of 100+ apps without removing existing pipeline logic for deployments. Code that passed testing but used depreciating technologies or temporary solutions went to production significantly less, <strong>saving the org >$200,000 in roll backs</strong> in 2023.</li>
+                  <li><strong>Improved codebase security across the digital team by 25%</strong> by implementing Python scripts to remove secrets from >100 files of code and pull secrets from a secure AWS vault. These scripts reduced times to minutes and reduced the overall cost of data in the cloud.</li>
+                  <li>Took responsibility for bringing all API's under the team to production by release testing all solutions created, ensuring the safety of 1000+ code files. After ample documentation and testing, <strong>the code that I greenlit went to millions of customers.</strong></li>
+                </ul>
+                <!-- <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow. -->
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item" data-aos="fade-left"
+          data-aos-anchor-placement="bottom-bottom">
+            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                <img src="./media/bgsb.png" class="">
+                Full Stack Developer - GSU Assisstantship Program
+              </button>
+            </h2>
+            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+              <div class="accordion-body">
+                <ul>
+                  <li>Designed and created the Black Girl STEM Brilliance program website utilized by <b>students and teachers on a national scale</b>. Proposed and implemented a stack that future college students and assistants could maintain with little knowledge transfer and minimal cost of development <text class="text-muted">(HTML/CSS/JS/AWS/GitHub/Brackets)</text>.</li>
+                  <li>Provided instruction in Github/version control fluency, responsive web development practices, and mobile app preparation for other assistants. Designed the current logo for the project with cohesion and stability in mind.</li>
+                  <li>Planned and executed a Javascript-based hackathon for highschool girls, going from conception to ~100-student turnout.</li>
+                  <li>Collaborated with highschool teachers to <b>provide direct lessons in computer science for 80 students</b> over the year.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item" data-aos="fade-left"
+          data-aos-anchor-placement="bottom-bottom">
+            <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                <img src="./media/nvision.png" class="">
+                Principal Frontend Developer - NVision Data Management
+              </button>
+            </h2>
+            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+              <div class="accordion-body">
+                <ul>
+                  <li>Designed and created a user-friendly and visually appealing frontend for the church's website, resulting in 2x weekly visitors and 30% greater tithe donations tracked. Largely utilized Bootstrap and Wordpress to design the pages.</li>
+                  <li>Optimized website performance by reducing page load time, eliminating freezing during peak traffic during COVID quarantine. Cut out largely unnecessary forms and JS actions that the main user base didn't interact with when polled.</li>
+                  <li>Organized sessions for church's youth interested in tech to contribute assets to the webpages and learn about version control, resume building, and coding challenges.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item" data-aos="fade-left"
+          data-aos-anchor-placement="bottom-bottom">
+            <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+                <img src="./media/lnrsLogo.png" class="">
+                Software Developer - LexisNexis Risk Solutions
+              </button>
+            </h2>
+            <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
+              <div class="accordion-body">
+                <ul>
+                  <li> Developed and implemented a centralized logging dashboard in Elastic Kibana, reducing diagnosis time for critical application issues by 50%. The dashboard featured visual representations of running applications with green, yellow, or red text that indicated the wait times for said applications based on set parameters. The dashboard pulled from secured databases and reflected a visual that management was previously told could not be created.</li>
+                  <li>Learned to provide meaningful documentation and instruct the team regarding how to further improve logging solution</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item" data-aos="fade-left"
+          data-aos-anchor-placement="bottom-bottom">
+            <h2 class="accordion-header" id="panelsStayOpen-headingFive">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
+                <img src="./media/ung.png" class="">
+                Vice President - UNG Coding Warriors
+              </button>
+            </h2>
+            <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFive">
+              <div class="accordion-body">
+                <ul>
+                  <li>Lead in creating projects, including interactive games and a team website, fostering a dynamic learning environment and enhancing collaborative coding skills for members of all skill levels.</li>
+                  <li>Provided interactive lessons for coders of all skill levels to utilize Git and Github, HTML/CSS, and Python for group efforts and personal projects</li>
+                  <li>Hosted coding competitions for the group to sharpen their skills with Java for game development and Github version control</li>
+                  <li>Designed a sleek portfolio page for the group using Github hosting, HTML/CSS, and Bootstrap to build the site's elements</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="education"></div>
+    </section>
+    <br><br>
+    <section>
+        <h2>Education</h2><br>
+        <div class="" data-aos="fade-up"
+        data-aos-anchor-placement="center-bottom">
+          <div class="">
+            <h5 class="">Georgia State University</h5>
+            <h6 class="subtitle text-muted">Atlanta, GA</h6>
+            <p class="">Bachelor of Computer Science, 2021</p>
+          </div>
+        </div><br>
+        <div class="" data-aos="fade-up"
+        data-aos-anchor-placement="center-bottom">
+          <h5 class="">University of North Georgia</h5>
+          <h6 class="subtitle text-muted">Gainesville, GA</h6>
+          <p class="">Associate of Business in Computer Science, 2019</p>
+        </div>
+        
+      </section>
+      
+    <!-- <br id="projects"><br> -->
+    <!-- <section data-aos="fade-right"
+    data-aos-anchor-placement="center-bottom">
+        <h2>Work/educations</h2>
 
-    <!-- Scripts -->
-    <script src="scripts/index.js"></script>
+        <div class="row">
+        <div class="col-5 container">
+          <a target="_blank" href="media/Ruwaida_Rajna_SHURP 2022_Poster_FINAL_JMedits_outlines.pdf"><img src="media/SHURPPoster.jpg" class="img-fluid">
+        <h6>Equipping pooled CRISPR screens with <i>in situ</i> tracking  of individual sgRNA</h6></a>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-5 container">
+          <a target="_blank" href="media/FinalPoster.png"><img src="media/FinalPoster.png" class="img-fluid">
+        <h6>Analysis of Fur-dependent gene regulation of the gonococcal TonB-dependent transport proteins involved in zinc aquisition</h6></a>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-5 container">
+          <a target="_blank" href="media/SHURP 2022 Final Presentation (1).pptx"><img src="media/harvardppt.png" class="img-fluid">
+            <h6>Equipping spatial transcriptomics with CRISPR</h6></a>
+          </div>
+        <div class="col-1"></div>
+          <div class="col-5 container">
+            <a target="_blank" href="media/Symposium Abstract Booklet 2021.pdf"><img src="media/Symposium.jpg" class="img-fluid">
+          <h6>Going the Distance 2.0 - End-of-Summer Poster Symposium</h6></a>
+          </div>
+      </div>
+
+      <div class="row">
+        <div class="col-5 container">
+          <a target="_blank" href="media/Honors Thesis fall 2022.pdf"><img src="media/HonorsThesis.png" class="img-fluid">
+            <h6>Zinc Homeostasis in Streptococcus pyogenes and Streptococcus pneumoniae: A Literature Review</h6></a>
+          </div>
+          <div class="col-1"></div>
+        <div class="col-5 container">
+          <a target="_blank" href="media/RR_Resume_2024 Grad Application (1).pdf"><img src="media/resume.png" class="img-fluid">
+        <h6>December 2023 Resume</h6></a>
+        </div>
+      </div>
+
+    </section> -->
+  </div>
+</div>
+  <br><br><br>
+  <footer>
+    © Woody Allen Montilus 2020
+  </footer>
+
 </body>
 </html>
