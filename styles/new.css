@@ -3,7 +3,7 @@ html {
 }
 
 body {
-    background: rgba(128,0,128, 0.1);
+    /* background: rgba(7, 83, 175,0.1); */
 }
 
 #content {
@@ -12,14 +12,11 @@ body {
 
 nav, #info {
     /* background-image: linear-gradient(to bottom right, purple,orange); */
-    background-color: rgb(189,116,183);
+    background-color: rgb(157, 17, 141);
     color: white;
-    border-radius: 10px 10px;
-}
-
-nav {
     border-radius: 0px 0px 10px 10px;
 }
+
 #info {
     padding-bottom: 15px;
     position: sticky;
@@ -84,6 +81,17 @@ a:hover, i:hover {
 .accordion-item {
     background: none;
     border: none;
+}
+
+#resume-pic {
+    width: 500px;
+    transition: 0.3s;
+    border-radius: 10px;
+}
+
+#resume-pic:hover {
+    width: 510px;
+    filter: brightness(90%);
 }
 
 footer {

@@ -34,7 +34,6 @@
             <li class="nav-item"></li>
             <li class="nav-item"></li>
             <li class="nav-item"></li>
-            <li class="nav-item"></li>
             <li class="nav-item">
               <a class="nav-link" href="#">About Me</a>
             </li>
@@ -43,6 +42,9 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#education">Education</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#resume">Resume</a>
             </li>
             <li class="nav-item"></li>
           </ul>
@@ -82,14 +84,14 @@
     <div class="row container-fluid" id="content">
       <div class="col-md-1 d-none d-sm-block"></div>
     <div class="col-md-3 well">
+      <img src="media/headshots/headshot7.png" class="img-fluid d-none d-md-block" id="profile" style="border-radius: 10px 10px 0px 0px">
       <div id="info">
-        <img src="media/profilepic.jpg" class="img-fluid d-none d-md-block" id="profile" style="border-radius: 10px 10px 0px 0px">
         <header>
-            <h3 class="display-6 fw-bold text-body-emphasis text-center" style="padding-top: 20px;">Woody Allen Montilus</h3>
+            <h3 class="display-6 fw-bold text-center" style="padding-top: 20px; color: white;">Woody Allen Montilus</h3>
             <h4 class="text-center">Java/Python Developer</h4><br>
         </header>
           <p class="text-center text-muted container-fluid">
-            <a href="mailto: woodablu98@gmail.com">
+            <a href="mailto: woodablu@gmail.com">
               <i class="fa-regular fa-envelope fa-2xl"></i>
             </a>
             <a href="https://www.linkedin.com/in/woody-montilus/" target="_blank">
@@ -99,7 +101,7 @@
               <i class="fa-brands fa-github fa-2xl"></i>
             </a>
           </p>
-          <p class="text-center text-muted container-fluid" style="color: white;"><i class="fa-solid fa-phone fa-xl"></i> (678)-926-8929</p>
+          <!-- <p class="text-center text-muted container-fluid" style="color: white;"><i class="fa-solid fa-phone fa-xl"></i> (678)-926-8929</p> -->
         </div>
         <br><br>
         <div class="d-none col-sm-block">
@@ -156,15 +158,14 @@
         <h2>About Me</h2><br>
         <p data-aos="fade-right"
         data-aos-anchor-placement="center-bottom">
-          Hi all! I am an accomplished Software Engineer with experience primarily in REST API design and maintenance using Java and Python. I am currently aggressively looking for mainly software engineer roles, application software positions in innovative tech, full stack developer positions and security software positions.
+          Hi all! I am an accomplished Software Engineer with experience primarily in REST API design and maintenance using Java and Python. I am currently searching for mainly software engineer roles, application software positions in innovative tech, full stack developer positions and security software positions.
 
           <br><br>I've specialized in automating tasks/solutions and creating robust RESTful UI's to access tools and databases. My experience includes but is not limited to cloud security, multi-level performance testing, and front end development. I'm also capable and comfortable with presenting solutions to others and collaboration across teams. I’m always down to learn new tech, languages, and frameworks!
 
           <br><br>I've served as a leader of nVision Ministry's technology team as the Principal Frontend Developer for a time, and have also supported my educational institution's communities as the Vice President of my college's Coding Warriors group and as the Executive Advisor of the school's Black Student Union.
 
-          <br><br>Outside of work, I enjoy making music and digital art, and learning new recipes to try making.
+          <br><br id="experience">Outside of work, I enjoy making music and digital art, and learning new recipes to try making.
         </p>
-        <div id="experience"></div>
         <br>
         <!-- <div class="card card-subtitle card-body">
            <ul style="color: rgb(99, 99, 99); margin-bottom: 0px;">
@@ -256,7 +257,7 @@
           data-aos-anchor-placement="bottom-bottom">
             <h2 class="accordion-header" id="panelsStayOpen-headingFive">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
-                <img src="./media/ung.png" class="">
+                <img src="./media/ung.png" class="" id="education">
                 Vice President - UNG Coding Warriors
               </button>
             </h2>
@@ -272,10 +273,10 @@
             </div>
           </div>
         </div>
-        <div id="education"></div>
     </section>
     <br><br>
-    <section>
+    <div class="row">
+      <section class="col-md-6">
         <h2>Education</h2><br>
         <div class="" data-aos="fade-up"
         data-aos-anchor-placement="center-bottom">
@@ -289,53 +290,56 @@
         data-aos-anchor-placement="center-bottom">
           <h5 class="">University of North Georgia</h5>
           <h6 class="subtitle text-muted">Gainesville, GA</h6>
-          <p class="">Associate of Business in Computer Science, 2019</p>
+          <p id="resume">Associate of Business in Computer Science, 2019</p>
         </div>
-        
+          
       </section>
-      
-    <!-- <br id="projects"><br> -->
-    <!-- <section data-aos="fade-right"
+      <br><br>
+        
+      <section class="col-md-6">
+        <h2>Certifications</h2><br>
+        <div>
+          <div data-aos="fade-up"
+          data-aos-anchor-placement="center-bottom">
+            <h5>T-Mobile</h5>
+            <p>Full Stack Development Readiness -- <h style="color:rgb(125, 125, 125);">January 2022</h></p>
+  
+            <p>Test-Driven Development Certificate -- <h style="color:rgb(125, 125, 125);">January 2022</h></p>
+  
+            <p>API Security Training Certificate -- <h style="color:rgb(125, 125, 125);">January 2022</h></p>
+          </div>
+          <br>
+  
+          <div data-aos="fade-up"
+          data-aos-anchor-placement="center-bottom">
+            <h5>Google</h5>  
+            <p>Cybersecurity Professional Certificate -- <i style="color:rgb(125, 125, 125);">April 2024</i></p>
+            
+            <p>Project Management: Professional Certificate -- <i style="color:rgb(125, 125, 125);">April 2024</i></p>
+          </div>
+          <br>
+  
+          <div data-aos="fade-up"
+          data-aos-anchor-placement="center-bottom">
+            <h5>Amazon</h5>  
+            <p>Amazon Web Services Developer Certificate -- <i style="color:rgb(125, 125, 125);">May 2024</i></p>
+          </div>
+        <br>
+      </div><br>
+          
+      </section>
+    </div>
+    <br><br>
+    <section class="text-center">
+      <h2>Resume</h2><br>
+      <div class="" data-aos="fade-up"
     data-aos-anchor-placement="center-bottom">
-        <h2>Work/educations</h2>
-
-        <div class="row">
-        <div class="col-5 container">
-          <a target="_blank" href="media/Ruwaida_Rajna_SHURP 2022_Poster_FINAL_JMedits_outlines.pdf"><img src="media/SHURPPoster.jpg" class="img-fluid">
-        <h6>Equipping pooled CRISPR screens with <i>in situ</i> tracking  of individual sgRNA</h6></a>
-        </div>
-        <div class="col-1"></div>
-        <div class="col-5 container">
-          <a target="_blank" href="media/FinalPoster.png"><img src="media/FinalPoster.png" class="img-fluid">
-        <h6>Analysis of Fur-dependent gene regulation of the gonococcal TonB-dependent transport proteins involved in zinc aquisition</h6></a>
-        </div>
+      <a href="media/WoodyAMontilus_Resume.pdf" target="_blank">
+        <img src="media/resume.jpg" id="resume-pic">
+      </a>  
       </div>
-
-      <div class="row">
-        <div class="col-5 container">
-          <a target="_blank" href="media/SHURP 2022 Final Presentation (1).pptx"><img src="media/harvardppt.png" class="img-fluid">
-            <h6>Equipping spatial transcriptomics with CRISPR</h6></a>
-          </div>
-        <div class="col-1"></div>
-          <div class="col-5 container">
-            <a target="_blank" href="media/Symposium Abstract Booklet 2021.pdf"><img src="media/Symposium.jpg" class="img-fluid">
-          <h6>Going the Distance 2.0 - End-of-Summer Poster Symposium</h6></a>
-          </div>
-      </div>
-
-      <div class="row">
-        <div class="col-5 container">
-          <a target="_blank" href="media/Honors Thesis fall 2022.pdf"><img src="media/HonorsThesis.png" class="img-fluid">
-            <h6>Zinc Homeostasis in Streptococcus pyogenes and Streptococcus pneumoniae: A Literature Review</h6></a>
-          </div>
-          <div class="col-1"></div>
-        <div class="col-5 container">
-          <a target="_blank" href="media/RR_Resume_2024 Grad Application (1).pdf"><img src="media/resume.png" class="img-fluid">
-        <h6>December 2023 Resume</h6></a>
-        </div>
-      </div>
-
-    </section> -->
+    </section>
+    <br><br>
   </div>
 </div>
   <br><br><br>
@@ -343,5 +347,35 @@
     © Woody Allen Montilus 2020
   </footer>
 
+  <script>
+    const themes = {
+      1: "#0753af", //blue
+      2: "#85080a", //red
+      3: "#754a18", //brown
+      4: "#536917", //light green
+      5: "#114c22", // dark green
+      6: "#6145bd", //purple
+      7: "#9d118d" //pink
+    };
+
+    const bgThemes = {
+      1: "7, 83, 175", //blue
+      2: "133, 8, 10", //red
+      3: "117, 74, 24", //brown
+      4: "83, 105, 23", //light green
+      5: "17, 76, 34", // dark green
+      6: "97, 69, 189", //purple
+      7: "157, 17, 141" //pink
+    };
+
+    const n = Math.floor(Math.random() * 7) + 1;
+    const color = `${themes[n]}`;
+
+    document.querySelector('#profile').src=`media/headshots/headshot${n}.png`;
+    document.querySelector('#info').style.backgroundColor = color;
+    document.querySelector('nav').style.backgroundColor = color;
+    document.querySelector('body').style.background = `rgba(${bgThemes[n]},0.05)`;
+
+  </script>
 </body>
 </html>

@@ -32,7 +32,7 @@ html {
 
 nav, #info {
     /* background-image: linear-gradient(to bottom right, purple,orange); */
-    background-color: rgb(189,116,183);
+    background-color: rgb(25, 75, 136);
     color: white;
     border-radius: 10px 10px;
 }

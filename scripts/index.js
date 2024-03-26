@@ -31,3 +31,6 @@
 //    } // End if 
 //  });
 //})
+$ (document).ready(function () {
+	$("body").css("background", "rgba(" + Math.floor(Math.random() * (360)) + ", 75, 59, 1)");
+});
