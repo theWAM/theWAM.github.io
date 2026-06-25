@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Strategic Financial Plan</title>
+    <!-- Include Chart.js for the visual graph -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --primary: #2c3e50;
+            --accent: #27ae60;
+            --text-color: #333333;
+            --border-color: #e0e0e0;
+            --tab-bg: #e8ecf1;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 3px solid var(--primary);
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            position: relative;
+        }
+        header:hover {
+            opacity: 0.8;
+        }
+        .home-icon-header {
+            position: absolute;
+            left: 10px;
+            top: 25px;
+            font-size: 2rem;
+        }
+        h1, h2, h3, h4 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+        
+        /* Tab Navigation Styles */
+        .tab {
+            background-color: var(--tab-bg);
+            border-radius: 8px 8px 0 0;
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            display: flex;
+            flex-wrap: wrap;
+            overflow: visible; /* Required to show dropdown */
+        }
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 12px 14px;
+            transition: 0.3s;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #555;
+            flex-grow: 1;
+        }
+        .tab button:hover, .dropdown:hover .dropbtn {
+            background-color: #d1d8e0;
+        }
+        .tab button.active, .dropdown.active-dropdown .dropbtn {
+            background-color: var(--card-bg);
+            color: var(--primary);
+            border-bottom: 3px solid var(--accent);
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            flex-grow: 1;
+        }
+        .dropdown .dropbtn {
+            width: 100%;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 10;
+            border-radius: 0 0 8px 8px;
+            top: 100%;
+            left: 0;
+        }
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border-bottom: 1px solid #eee;
+        }
+        .dropdown-content a:last-child {
+            border-bottom: none;
+            border-radius: 0 0 8px 8px;
+        }
+        .dropdown-content a:hover {
+            background-color: #e0e0e0;
+            color: var(--primary);
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .tabcontent {
+            display: none;
+            padding: 20px 0;
+            border-top: none;
+        }
+        
+        .canvas-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .canvas-grid { grid-template-columns: 1fr; }
+            .home-icon-header { display: none; } /* Hide icon on mobile to save space */
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        .slider-group {
+            margin-bottom: 18px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        input[type="range"] {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+        .value-display {
+            font-weight: bold;
+            color: var(--accent);
+            float: right;
+        }
+        .metric-box {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--accent);
+        }
+        .metric-box h4 {
+            margin: 0 0 5px 0;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .metric-value {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .split-box {
+            display: flex;
+            background: #fafafa;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        .split-half {
+            flex: 1;
+            padding: 20px;
+        }
+        .split-half:first-child {
+            border-right: 1px solid #ddd;
+        }
+        @media (max-width: 768px) {
+            .split-box { flex-direction: column; }
+            .split-half:first-child { border-right: none; border-bottom: 1px solid #ddd; }
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.95rem;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background: var(--primary);
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        ul {
+            margin-top: 0;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+        }
+        .highlight-lever {
+            background: #ecf0f1;
+            border-left: 5px solid var(--primary);
+            color: var(--text-color);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+        .small-chart {
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- MASTER HEADER LINK -->
+    <header onclick="openTab(null, 'PlanHome')" title="Return to Home Dashboard">
+        <span class="home-icon-header"><</span>
+        <h1>Strategic Financial Plan Playground</h1>
+        <p>Interactive Roadmap & Sandbox Strategy (2026 – 2065)</p>
+    </header>
+
+    <!-- TAB NAVIGATION -->
+    <div class="tab">
+        <!-- DROPDOWN TAB FOR 6-MONTH PLAN -->
+        <div class="dropdown" id="dropdown6Month">
+            <button class="dropbtn tablinks" onclick="openTab(event, 'Plan6Month')" id="btn6Month">6-Month</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="navigateAndScroll(event, 'Plan6Month', 'core-actions', 'dropdown6Month')">Core Strategic Actions</a>
+                <a href="#" onclick="navigateAndScroll(event, 'Plan6Month', 'apple-sim', 'dropdown6Month')">Apple Card Visualizer</a>
+                <a href="#" onclick="navigateAndScroll(event, 'Plan6Month', 'discover-sim', 'dropdown6Month')">Discover Visualizer</a>
+            </div>
+        </div>
+
+        <button class="tablinks" onclick="openTab(event, 'Plan2027')">2027</button>
+        <button class="tablinks" onclick="openTab(event, 'Plan2028')">2028</button>
+        <button class="tablinks" onclick="openTab(event, 'Plan2029')">2029</button>
+        <button class="tablinks" onclick="openTab(event, 'Plan2030')">2030-35</button>
+        <button class="tablinks" onclick="openTab(event, 'Plan2035')">2035-45</button>
+        <button class="tablinks" onclick="openTab(event, 'Plan2045')">2045-65</button>
+        <button class="tablinks" onclick="openTab(event, 'PlanWhatIf')">What-Ifs</button>
+    </div>
+
+    <!-- TAB 0: HOME DASHBOARD (DEFAULT ACTIVE) -->
+    <div id="PlanHome" class="tabcontent" style="display: block;">
+        <div class="card full-width">
+            <h2>The Master Strategy Overview</h2>
+            <p>Welcome to your multi-decade financial sandbox. This document outlines the exact mechanics to transition from high-interest debt elimination into extreme wealth accumulation, terminating in complete lifestyle freedom by age 45.</p>
+            
+            <div class="split-box">
+                <div class="split-half">
+                    <h3 style="margin-top: 0; color: var(--accent);">Our Goals</h3>
+                    <ul>
+                        <li><strong>Debt Freedom:</strong> Eradicate consumer credit debt before solo apartment living begins.</li>
+                        <li><strong>Milestone Cash-Flow:</strong> Pay for the 2028 engagement, 2029 wedding, and a reliable partner vehicle entirely in cash.</li>
+                        <li><strong>Premium Living:</strong> Comfortably scale into a high-end, $9,500/month lifestyle by our mid-30s.</li>
+                        <li><strong>Coast FIRE by 45:</strong> Accumulate $1.78M in manual investments so you can step away from software engineering and "coast" in a low-stress $85,000/year lifestyle job.</li>
+                    </ul>
+                </div>
+                <div class="split-half">
+                    <h3 style="margin-top: 0; color: #c0392b;">Our Obstacles</h3>
+                    <ul>
+                        <li><strong>High-Interest Drag:</strong> An active Apple Card balance of $7,358.01 carrying a volatile 25.49% APR.</li>
+                        <li><strong>Fixed Cash Outflows:</strong> A $760.40 monthly auto loan deduction maturing in June 2028.</li>
+                        <li><strong>The Balancing Act:</strong> Managing premium solo rent ($2,325) alongside heavy investment goals before combined household incomes peak.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 30px;">The Trajectory Impact: Optimized vs. Unoptimized</h3>
+            <p>Your choices over the next 12 to 24 months dictate the trajectory of your next 40 years. The chart below demonstrates the compounding difference between executing our <strong>Aggressive Debt & Investing Strategy</strong> versus falling into the trap of paying credit card minimums and delaying your core investment allocations.</p>
+            
+            <div class="chart-container">
+                <canvas id="netWorthChart"></canvas>
+            </div>
+            
+            <h3 style="margin-top: 40px; border-top: 1px solid #ddd; padding-top: 20px;">Financial Glossary</h3>
+            <ul>
+                <li><strong>Coast FIRE:</strong> A stage of financial independence where you have invested enough money early on that it will compound to fully support your retirement on its own. You can then "coast" by working a low-stress job that simply covers your current living expenses.</li>
+                <li><strong>Roth IRA:</strong> An Individual Retirement Account funded with post-tax money. All growth inside the account, and all withdrawals made after age 59½, are 100% tax-free.</li>
+                <li><strong>401(k) / Roth 401(k):</strong> An employer-sponsored retirement plan. A Traditional 401(k) lowers your current tax burden, while a Roth 401(k) builds tax-free wealth for the future.</li>
+                <li><strong>HSA (Health Savings Account):</strong> A highly potent investment vehicle paired with High Deductible Health Plans. Contributions are tax-deductible, growth is tax-free, and withdrawals for medical expenses are completely tax-free (triple-tax advantaged).</li>
+                <li><strong>HYSA (High-Yield Savings Account):</strong> A liquid bank account that pays significantly higher interest rates than standard savings accounts, ideal for emergency funds and short-term milestone capital.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TAB 1: 6-MONTH PLAN (MERGED WITH CC VISUALIZER) -->
+    <div id="Plan6Month" class="tabcontent">
+        <div class="card full-width" id="core-actions">
+            <h2>The Next 6 Months: Super Short-Term Foundations (July 2026 – December 2026)</h2>
+            <p>The primary objectives for the remainder of 2026 are aggressively paying down high-interest debt, building the apartment cash cushion, and cash-flowing medical treatments without liquidating your safety nets.</p>
+            
+            <h3>Core Strategic Actions</h3>
+            <ul>
+                <li><strong>401(k) Re-allocation:</strong> Lowering your Traditional 401(k) contribution from 8% to 6% frees up pre-tax capital. This shifts your projected bi-weekly direct deposit to approximately <strong>$2,487.20</strong>.</li>
+                <li><strong>Rajna's PRP Treatment Plan:</strong> The $2,400 action plan (3 sessions at $800 each) will be financed via Affirm ($200 upfront + $200 bi-weekly). To prevent cash flow strain, we'll temporarily drop Rajna's credit card contribution from $910 to <strong>$510 per month</strong>. At the beginning of each month, Rajna will send Woody $400 to be used for PRP payments.</li>
+                <li><strong>Debt & Spending Ceilings:</strong> Maintain strict <strong>$2,000 per month</strong> credit card paydown velocity. To hit the target payoff date of October 2026, manual discretionary card spending must be strictly capped at <strong>$250 per month</strong>.</li>
+                <li><strong>Employer Tuition Reimbursement:</strong> Cox Auto provides a tuition reimbursement program that covers the cost cost of a degree, given you earn a high grade in classes. Though we had to use the Apple Card to pay for a summer couse, 
+                    the <strong>$750</strong> reimbursement arriving in August will be funneled directly into the Apple Card principal. For the fall, I've applied for student loans, which I hope will be greater than the total cost of tuition. 
+                    If so, I can take the remaining amount to put towards the Apple Card. This will effectively transfer the balance of the loan to a provider offering a much more favorable interest rate (2%-5% instead of +25%). If not, I will at least not be required to pay for the fall out of pocket, saving myself from greatly increasing my cc balance for 2 months, resulting in inflated interest payments.</li>
+            </ul>
+        </div>
+
+        <div class="card full-width" id="apple-sim" style="border: 2px solid var(--accent);">
+            <h2>💳 Apple Card Payoff Timeline Simulator</h2>
+            <p><strong>Starting Balance:</strong> $7,358.01 &nbsp; | &nbsp; <strong>APR:</strong> 25.49% &nbsp; | &nbsp; <strong>Baseline Payment Allocation:</strong> $2,000/month</p>
+            <p>Adjust the slider to see how your monthly discretionary spending on this card delays or accelerates your exact debt-free date. <em>(Calculations automatically include the $750 tuition reimbursement in August 2026).</em></p>
+            
+            <div class="canvas-grid" style="margin-top: 20px;">
+                <div class="card" style="box-shadow: none; background: #fafafa;">
+                    <h3>Monthly Discretionary Spending</h3>
+                    <div class="slider-group" style="margin-top: 30px;">
+                        <label>New Charges Added to Card <span class="value-display" id="spendLabel">$250</span></label>
+                        <input type="range" id="spendInput" min="0" max="1500" step="50" value="250">
+                    </div>
+                </div>
+
+                <div class="card" style="box-shadow: none; background: #fafafa; display: flex; flex-direction: column; justify-content: center;">
+                    <div class="metric-box">
+                        <h4>Debt-Free Month</h4>
+                        <div class="metric-value" id="ccPayoffDate">October 2026</div>
+                    </div>
+                    <div class="metric-box" style="margin-bottom: 0; border-left-color: #e74c3c;">
+                        <h4>Total Interest Paid</h4>
+                        <div class="metric-value" style="color: #c0392b;" id="ccTotalInterest">$0.00</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ccTableContainer" style="margin-top: 20px; overflow-x: auto;">
+                <!-- Dynamic Table Generated via JS -->
+            </div>
+        </div>
+
+        <div class="card full-width" id="discover-sim" style="border: 2px solid #e67e22; margin-top: 20px;">
+            <h2>💳 Discover Card Payoff Timeline Simulator (Rajna's Account)</h2>
+            <p><strong>Starting Balance:</strong> $16,520.49 &nbsp; | &nbsp; <strong>Blended APR:</strong> ~18.78%* &nbsp; | &nbsp; <strong>Statement Minimum:</strong> $323.00</p>
+            <p style="font-size: 0.85rem; color: #7f8c8d;"><em>*Blended APR calculated dynamically based on the split 17.74% and 19.49% balances shown on the statement.</em></p>
+            <p>This timeline models the 6-month "medical season" where payments drop to alleviate cash flow, followed by the resumption of baseline payments, and a massive capital strike using your March 2027 bonus.</p>
+            
+            <div class="canvas-grid" style="margin-top: 20px;">
+                <div class="card" style="box-shadow: none; background: #fafafa;">
+                    <h3>Simulation Variables</h3>
+                    
+                    <div class="slider-group">
+                        <label>Medical Season Payment (Jul - Dec 2026) <span class="value-display" id="medPayLabel">$510</span></label>
+                        <input type="range" id="medPayInput" min="323" max="1500" step="10" value="510">
+                    </div>
+
+                    <div class="slider-group">
+                        <label>Standard Base Payment (Jan 2027 onwards) <span class="value-display" id="basePayLabel">$910</span></label>
+                        <input type="range" id="basePayInput" min="500" max="2500" step="50" value="910">
+                    </div>
+
+                    <div class="slider-group">
+                        <label>March 2027 Bonus Application <span class="value-display" id="bonusLabel">$7,600</span></label>
+                        <input type="range" id="bonusInput" min="0" max="10000" step="100" value="7600">
+                    </div>
+
+                    <div class="slider-group">
+                        <label>Monthly Discretionary New Charges <span class="value-display" id="discSpendLabel">$0</span></label>
+                        <input type="range" id="discSpendInput" min="0" max="1000" step="10" value="0">
+                    </div>
+                </div>
+
+                <div class="card" style="box-shadow: none; background: #fafafa; display: flex; flex-direction: column; justify-content: center;">
+                    <div class="metric-box" style="border-left-color: #e67e22;">
+                        <h4>Debt-Free Month</h4>
+                        <div class="metric-value" id="discPayoffDate" style="color: #d35400;">Calculating...</div>
+                    </div>
+                    <div class="metric-box" style="margin-bottom: 0; border-left-color: #e74c3c;">
+                        <h4>Total Interest Paid</h4>
+                        <div class="metric-value" style="color: #c0392b;" id="discTotalInterest">$0.00</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="discTableContainer" style="margin-top: 20px; overflow-x: auto;">
+                <!-- Dynamic Table Generated via JS -->
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="Plan2027" class="tabcontent">
+    
+    <!-- THE VERDICT BANNER -->
+    <div class="card full-width" style="background: linear-gradient(135deg, #2c3e50, #1a252f); color: white; text-align: center; padding: 40px 20px; border: 4px solid #f1c40f;">
+        <h1 style="color: white; margin-bottom: 10px; font-size: 2.2rem; text-transform: uppercase; letter-spacing: 2px;">The Move-In Verdict</h1>
+        <h2 style="color: #f1c40f; margin-top: 0; margin-bottom: 20px; font-size: 1.8rem; line-height: 1.4;">
+            IF STAYING IN APT <span style="color: #e74c3c;">LESS THAN 4 YEARS</span>: ☀️ AUG '27 WINS.<br>
+            IF STAYING IN APT <span style="color: #27ae60;">MORE THAN 4 YEARS</span>: ❄️ FEB '27 WINS.
+        </h2>
+        <p style="font-size: 1.15rem; max-width: 800px; margin: 0 auto; color: #ecf0f1;">
+            Based on the Inkwell Decatur prices this year, the summer rent gap is much smaller than expected. Delaying my move until August frees up <strong>$12,000</strong> in unspent rent, which saves us roughly <strong>$3,000</strong> in Discover card interest. Because the summer lease premium is only ~$300/month, it will take <strong>50 Months</strong> for moving in the winter to be a better deal.
+        </p>
+    </div>
+
+    <!-- INTERACTIVE MOVE-IN ANALYZER -->
+    <div class="card full-width" style="border: 2px solid #8e44ad; margin-bottom: 30px;">
+        <h2>❄️ Winter vs. ☀️ Summer Move-In Analyzer</h2>
+        <p>Adjust your estimated local rent prices below to find the exact mathematical breakeven point where the long-term cost of a summer lease eclipses the short-term cash advantage of waiting.</p>
+        
+        <div class="canvas-grid" style="margin-top: 20px;">
+            <div class="card" style="box-shadow: none; background: #fafafa;">
+                <h3>Market Variables</h3>
+                
+                <div class="slider-group" style="margin-top: 20px;">
+                    <label>Target Winter Rent (Feb) <span class="value-display" id="wRentLabel">$2,000</span></label>
+                    <input type="range" id="wRentInput" min="1500" max="3500" step="50" value="2000">
+                </div>
+                <div class="slider-group">
+                    <label>Target Summer Rent (Aug) <span class="value-display" id="sRentLabel">$2,300</span></label>
+                    <input type="range" id="sRentInput" min="1500" max="4000" step="50" value="2300">
+                </div>
+                <div class="slider-group">
+                    <label>Months Delayed (Feb to Aug) <span class="value-display" id="delayLabel">6 Months</span></label>
+                    <input type="range" id="delayInput" min="1" max="12" step="1" value="6">
+                </div>
+                <div class="slider-group">
+                    <label>Discover Debt APR <span class="value-display" id="aprLabel">18.78%</span></label>
+                    <input type="range" id="aprInput" min="5" max="30" step="0.01" value="18.78">
+                </div>
+            </div>
+
+            <div class="card" style="box-shadow: none; background: #fafafa; display: flex; flex-direction: column; justify-content: center;">
+                <div class="metric-box" style="border-left-color: #3498db;">
+                    <h4>Upfront Cash Retained (If Delayed)</h4>
+                    <div class="metric-value" id="upfrontCalc" style="color: #2980b9;">$12,000</div>
+                </div>
+                <div class="metric-box" style="border-left-color: #27ae60;">
+                    <h4>Est. Avoided CC Interest</h4>
+                    <div class="metric-value" id="intSavedCalc" style="color: #27ae60;">+$2,997</div>
+                </div>
+                <div class="metric-box" style="margin-bottom: 0; border-left-color: #8e44ad;">
+                    <h4>Breakeven Month</h4>
+                    <div class="metric-value" id="breakevenCalc" style="color: #8e44ad;">Month 50</div>
+                </div>
+            </div>
+        </div>
+        <div class="chart-container" style="height: 300px; margin-top: 20px;">
+            <canvas id="moveInChart"></canvas>
+        </div>
+    </div>
+
+    <!-- TOGGLE BUTTONS -->
+    <div style="display: flex; gap: 15px; margin-bottom: 25px;">
+        <button id="btnWinterToggle" onclick="toggleMoveIn('winter')" style="flex: 1; padding: 15px; font-size: 1.2rem; font-weight: bold; border-radius: 8px; cursor: pointer; border: 3px solid #3498db; background-color: transparent; color: #3498db; transition: 0.3s;">
+            ❄️ February 2027 Move-In
+        </button>
+        <button id="btnSummerToggle" onclick="toggleMoveIn('summer')" style="flex: 1; padding: 15px; font-size: 1.2rem; font-weight: bold; border-radius: 8px; cursor: pointer; border: 3px solid #f39c12; background-color: #f39c12; color: white; transition: 0.3s;">
+            ☀️ August 2027 Move-In
+        </button>
+    </div>
+
+    <!-- WINTER PATH CONTENT -->
+    <div id="winterContent" style="display: none;">
+        <div class="card full-width" style="border-left: 6px solid #3498db; background: #f8fbfe;">
+            <h2 style="color: #2980b9;">Phase 1 & 2: The Winter Move-In</h2>
+            <p>If you choose to move in on February 18, 2027, you lock in the lower baseline rent forever, but you must subsidize 6 months of solo living before your partner integrates.</p>
+            
+            <div class="split-box" style="background: transparent; border: none; margin-bottom: 0;">
+                <div class="split-half" style="border: 1px solid #ddd; background: #fff; border-radius: 6px; margin-right: 10px;">
+                    <h3 style="margin-top: 0;">1. The Move-In Capital Pipeline</h3>
+                    <p>Your apartment fund officially reaches its peak of <strong>$9,630</strong> exactly on your move-in date.</p>
+                    <ul>
+                        <li><strong>Upfront Furniture:</strong> Capped at $3,000.</li>
+                        <li><strong>Liquid Cushion:</strong> $6,630 remains in your HYSA.</li>
+                    </ul>
+                    <div class="chart-container" style="height: 200px; margin-top: 15px;">
+                        <canvas id="apartmentSavingsChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="split-half" style="border: 1px solid #ddd; background: #fff; border-radius: 6px; margin-left: 10px;">
+                    <h3 style="margin-top: 0;">2. Solo Subsidy Calculator (Mar - Jul)</h3>
+                    <p style="font-size: 0.85rem; color: #7f8c8d;">Based on a $297.60 base monthly deficit after core bills are paid.</p>
+                    <div class="slider-group" style="margin-top: 15px;">
+                        <label>Monthly Withdrawal from $6,630 Savings <span class="value-display" id="withdrawLabel">$800</span></label>
+                        <input type="range" id="withdrawInput" min="300" max="1100" step="10" value="800">
+                    </div>
+                    <div class="metric-box" style="margin-bottom: 10px; padding: 10px;">
+                        <h4>Guilt-Free Monthly Spending</h4>
+                        <div class="metric-value" id="guiltFreeCalc" style="font-size: 1.3rem;">$502.40</div>
+                    </div>
+                    <div class="metric-box" style="margin-bottom: 0; padding: 10px;">
+                        <h4>Leftover Savings (August 1st)</h4>
+                        <div class="metric-value" id="remainingSavingsCalc" style="font-size: 1.3rem;">$1,830.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUMMER PATH CONTENT -->
+    <div id="summerContent" style="display: block;">
+        <div class="card full-width" style="border-left: 6px solid #f39c12; background: #fffdf8;">
+            <h2 style="color: #d35400;">Phase 1 & 2: The Summer Move-In (Mathematical Winner)</h2>
+            <p>By delaying moving out until August 2027, you completely skip the "Solo Subsidy" phase. You and your partner move in together on day one, and you utilize the 6-month delay to execute a massive debt strike.</p>
+            
+            <div class="split-box" style="background: transparent; border: none; margin-bottom: 0;">
+                <div class="split-half" style="border: 1px solid #ddd; background: #fff; border-radius: 6px; margin-right: 10px;">
+                    <h3 style="margin-top: 0;">1. The Discover Card Strike (Oct '26 - Jul '27)</h3>
+                    <p><strong>CRITICAL PIVOT:</strong> Because the Apple Card is mathematically projected to be zeroed out in October 2026, the full <strong>$2,000/month</strong> paydown allocation is completely liberated.</p>
+                    <div style="background: #fdf2e9; border-left: 4px solid #e67e22; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
+                        <p style="margin: 0; font-size: 0.95rem; font-weight: bold; color: #d35400;">Starting October 2026, a full $2,000/month will be diverted directly toward the Discover Card.</p>
+                    </div>
+                    <ul>
+                        <li><strong>Cash Injected:</strong> Generates over $12,000+ in massive principal damage before you ever sign a lease.</li>
+                        <li><strong>Immediate Impact:</strong> Vaporizes nearly the entire Discover balance instantly, saving thousands in compounding interest.</li>
+                    </ul>
+                </div>
+                
+                <div class="split-half" style="border: 1px solid #ddd; background: #fff; border-radius: 6px; margin-left: 10px;">
+                    <h3 style="margin-top: 0;">2. Immediate Integration (August)</h3>
+                    <p>You bypass the need for a $6,630 safety cushion entirely. Both incomes merge immediately upon signing the lease at Inkwell Decatur or a similar complex.</p>
+                    <ul>
+                        <li><strong>The Trade-Off:</strong> Your fixed living expenses will sit around ~$2,300/month ($2,047 base + utilities). Because your combined incomes easily clear $7,900, you can absorb this premium effortlessly without sacrificing your investment rate.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SHARED PHASE: MERGING & GROWING (WITH INTERACTIVE EXPENSES) -->
+    <div class="card full-width">
+        <h2>Phase 3: Moving In Together !!!(August 2027+)</h2>
+        <p>Regardless of the timeline, August 2027 marks the official merging of our household finances. With a combined net income of <strong>$7,956.40</strong> per month, we can easily handle the heavy lifting. Use the interactive calculator below to see exactly how our monthly living expenses impact our investment buffer.</p>
+        
+        <div class="canvas-grid" style="margin-top: 20px;">
+            
+            <!-- Interactive Sliders -->
+            <div class="card" style="box-shadow: none; background: #fafafa;">
+                <h3 style="margin-top: 0;">Interactive Fixed Expenses</h3>
+                
+                <div class="slider-group">
+                    <label>Rent <span class="value-display" id="expRentLabel">$2,110</span></label>
+                    <input type="range" id="expRent" min="1500" max="4000" step="1" value="2110">
+                </div>
+                <div class="slider-group">
+                    <label>Utilities <span class="value-display" id="expUtilLabel">$250</span></label>
+                    <input type="range" id="expUtil" min="50" max="500" step="10" value="250">
+                </div>
+                <div class="slider-group">
+                    <label>Car + Insurance <span class="value-display" id="expCarLabel">$950</span></label>
+                    <input type="range" id="expCar" min="0" max="1000" step="10" value="950">
+                </div>
+                <div class="slider-group">
+                    <label>Groceries <span class="value-display" id="expGrocLabel">$400</span></label>
+                    <input type="range" id="expGroc" min="200" max="1500" step="50" value="400">
+                </div>
+                <div class="slider-group">
+                    <label>Clothes <span class="value-display" id="expClothLabel">$50</span></label>
+                    <input type="range" id="expCloth" min="0" max="500" step="10" value="50">
+                </div>
+                <div class="slider-group">
+                    <label>Phone <span class="value-display" id="expPhoneLabel">$70</span></label>
+                    <input type="range" id="expPhone" min="50" max="300" step="10" value="70">
+                </div>
+                <div class="slider-group" style="margin-bottom: 5px;">
+                    <label>Subscriptions <span class="value-display" id="expSubLabel">$100</span></label>
+                    <input type="range" id="expSub" min="0" max="500" step="10" value="100">
+                </div>
+                
+                <hr style="border: none; border-top: 1px solid #ccc; margin: 15px 0;">
+                
+                <div style="display: flex; justify-content: space-between; font-weight: bold; color: var(--primary);">
+                    <span>+ Automatic 8% Misc Allocation:</span>
+                    <span id="expMiscCalc">$320.56</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-weight: bold; color: #c0392b; font-size: 1.2rem; margin-top: 5px;">
+                    <span>Total Monthly Fixed:</span>
+                    <span id="expTotalCalc">$4,327.56</span>
+                </div>
+            </div>
+
+            <!-- Dynamic Output & Pie Chart -->
+            <div class="card" style="box-shadow: none; background: #fafafa; display: flex; flex-direction: column;">
+                <h3 style="margin-top: 0; text-align: center;">Cash Flow Distribution</h3>
+                <div class="chart-container small-chart" style="height: 250px;">
+                    <canvas id="integrationPieChart"></canvas>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <ul style="font-size: 0.95rem; margin-bottom: 0;">
+                        <li><span style="color:#e74c3c; font-weight:bold;">Fixed Living:</span> Dynamically calculated.</li>
+                        <li><span style="color:#3498db; font-weight:bold;">Core Savings ($1,500):</span> For shared milestones.</li>
+                        <li><span style="color:#27ae60; font-weight:bold;">Investments ($1,000):</span> Brokerage & Roth IRAs.</li>
+                        <li><span style="color:#f39c12; font-weight:bold;">Debt Blitz ($950):</span> Eradicating final balances.</li>
+                        <li id="bufferListItem"><span style="color:#9b59b6; font-weight:bold;">Remaining Buffer:</span> <span id="bufferOutputText">$178.84</span></li>
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+    
+
+    <!-- TAB 3: 2028 PLAN -->
+    <div id="Plan2028" class="tabcontent">
+        <div class="card full-width">
+            <h2>2028: Shared Living, Engagement, & Wedding Scaling</h2>
+            <div class="split-box">
+                <div class="split-half">
+                    <h3 style="margin-top: 0;">1. The June Auto Loan Maturity</h3>
+                    <p>On <strong>June 15, 2028</strong>, your final $760.40 Tesla payment clears.</p>
+                    <ul>
+                        <li><strong>H2 Cash Surge:</strong> Redirecting this exact auto-draft into your shared HYSA adds an extra <strong>$4,562</strong> between July and December.</li>
+                        <!-- <li><strong>The Engagement Ring:</strong> This perfectly funds a high-quality engagement ring entirely out-of-pocket.</li> -->
+                    </ul>
+                </div>
+                <div class="split-half">
+                    <h3 style="margin-top: 0;">2. The March Bonus Pipeline</h3>
+                    <p>Your recurring corporate March bonus accelerates your primary milestone timeline:</p>
+                    <ul>
+                        <li><strong>After-Tax Bonus:</strong> ~$7,600 funneled directly into the Wedding HYSA.</li>
+                        <li><strong>Outcome:</strong> Mathematically guarantees hitting the <strong>$15,000–$25,000</strong> wedding target by early 2029.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 4: 2029 PLAN -->
+    <div id="Plan2029" class="tabcontent">
+        <div class="card full-width">
+            <h2>2029: The Milestone Year & Structural Upgrades</h2>
+            <div class="split-box">
+                <div class="split-half">
+                    <h3 style="margin-top: 0;">1. Structural Legal & Tax Shifts</h3>
+                    <ul>
+                        <li><strong>Married Filing Jointly (MFJ):</strong> Transition your tax filings to MFJ.</li>
+                        <li><strong>Bracket Blending:</strong> Blending your higher software salary with her graduate stipend drastically lowers your aggregate effective tax rate, meaning larger direct deposits.</li>
+                    </ul>
+                </div>
+                <div class="split-half">
+                    <h3 style="margin-top: 0;">2. Healthcare & HSA Supercharging</h3>
+                    <ul>
+                        <li><strong>Unified Insurance:</strong> Add her to your corporate HDHP under "Self + Spouse".</li>
+                        <li><strong>The Power-Up:</strong> The HSA maximum jumps to roughly <strong>$9,000 per year</strong> ($750/month), accelerating your pre-tax VT strategy.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3 style="margin-top: 30px;">3. The Partner's Cash Vehicle Strategy</h3>
+            <p>Post-wedding, the $1,000/mo wedding savings and $760/mo Tesla payment combine to free up <strong>$1,760.40/month</strong>. You can accumulate over <strong>$8,800 in just 5 months</strong> to completely cash-flow her used vehicle.</p>
+        </div>
+    </div>
+
+    <!-- TAB 5: 2030 - 2035 PLAN -->
+    <div id="Plan2030" class="tabcontent">
+        <div class="card full-width">
+            <h2>2030 – 2035: The Five-Year Horizon & High-End Lifestyle Scaling</h2>
+            <div class="metric-box" style="border-left-color: var(--primary);">
+                <h4>The Macro Goal (Age 35)</h4>
+                <div class="metric-value">Premium Comfort Tier</div>
+                <p style="margin: 5px 0 0 0; font-weight: bold;">$4,500/mo Rent & Utilities | $5,000/mo Fun & Living | $2,000/mo Cash Savings</p>
+            </div>
+
+            <h3 style="margin-top: 30px;">Sharp Budget Change vs. Gradual Progression Analysis</h3>
+            <div class="split-box">
+                <div class="split-half">
+                    <h4 style="margin-top: 0; color: #c0392b;">⚠️ The Danger of a Sharp Change</h4>
+                    <p>Attempting to force a $4,500 rent payment and a $5,000 fun budget onto your baseline 2027/2028 take-home pay ($7,956.40) creates an immediate <strong>$1,544 monthly deficit</strong>.</p>
+                </div>
+                <div class="split-half">
+                    <h4 style="margin-top: 0; color: var(--accent);">✅ The Power of Gradual Progression</h4>
+                    <p>By linking your lifestyle expansions directly to your 5% annual raises and your partner's post-graduate career, your combined take-home pay crosses <strong>$12,500/month by Age 35</strong>. This easily accommodates the premium budget while leaving a $3,000/mo surplus.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 6: 2035 - 2045 PLAN & CANVAS -->
+    <div id="Plan2035" class="tabcontent">
+        <div class="card full-width" style="border: 2px solid var(--accent);">
+            <h2>⚙️ Coast FIRE & Long-Term Canvas</h2>
+            <p>Adjust the inputs below to simulate macro-lifestyle inflation across your multi-decade timeline.</p>
+            
+            <div class="canvas-grid" style="margin-top: 10px;">
+                <div class="card" style="box-shadow: none; background: #fafafa;">
+                    <h3>Variables</h3>
+                    <div class="slider-group">
+                        <label>Target Mid-30s Rent & Utilities <span class="value-display" id="rentLabel">$4,500</span></label>
+                        <input type="range" id="rentInput" min="2000" max="6000" step="100" value="4500">
+                    </div>
+                    <div class="slider-group">
+                        <label>Target Mid-30s Living & Fun Budget <span class="value-display" id="funLabel">$5,000</span></label>
+                        <input type="range" id="funInput" min="2000" max="7000" step="100" value="5000">
+                    </div>
+                    <div class="slider-group">
+                        <label>Target Annual Cash Savings Goal <span class="value-display" id="saveLabel">$24,000</span></label>
+                        <input type="range" id="saveInput" min="12000" max="48000" step="1000" value="24000">
+                    </div>
+                    <div class="slider-group">
+                        <label>Target Coast FIRE Age <span class="value-display" id="ageLabel">45</span></label>
+                        <input type="range" id="ageInput" min="40" max="60" step="1" value="45">
+                    </div>
+                    <div class="slider-group">
+                        <label>Career Salary Cap Ceiling <span class="value-display" id="capLabel">$200,000</span></label>
+                        <input type="range" id="capInput" min="120000" max="350000" step="5000" value="200000">
+                    </div>
+                </div>
+
+                <div class="card" style="box-shadow: none; background: #fafafa;">
+                    <h3>Live Projections Impact</h3>
+                    <div class="metric-box">
+                        <h4>Age 35 Monthly Surplus/Deficit</h4>
+                        <div class="metric-value" id="surplusCalc">$0.00</div>
+                        <small id="surplusNote"></small>
+                    </div>
+                    <div class="metric-box">
+                        <h4>Estimated Net Worth at Coast Age</h4>
+                        <div class="metric-value" id="coastNwCalc">$0.00</div>
+                    </div>
+                    <div class="metric-box">
+                        <h4>Estimated Final Net Worth (Age 65)</h4>
+                        <div class="metric-value" id="finalNwCalc">$0.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card full-width">
+            <h2>2035 – 2045: The Accumulation Peak & Coast FIRE Levers</h2>
+            <h3 style="margin-top: 30px;">Core Wealth Accumulation Levers</h3>
+            <div class="highlight-lever">
+                <h4 style="margin-top: 0; color: var(--primary);">LEVER 1: Automated Workplace Roth 401(k)</h4>
+                <p style="margin-bottom: 0;">Set to a baseline of 10%; Captures your full 6% Company Match.</p>
+            </div>
+            <div class="highlight-lever" style="border-left-color: var(--accent);">
+                <h4 style="margin-top: 0; color: var(--primary);">LEVER 2: Pre-Tax Corporate HSA</h4>
+                <p style="margin-bottom: 0;">Funded to the Family Maximum. 50% remains liquid, while 50% is automatically funneled into Vanguard Total World Stock (VT).</p>
+            </div>
+            <div class="highlight-lever" style="border-left-color: #f39c12;">
+                <h4 style="margin-top: 0; color: var(--primary);">LEVER 3: Post-Tax Manual Investment Allocation</h4>
+                <p style="margin-bottom: 0;">$636/mo routed directly to your combined Roth IRAs (FFIJX) | $364/mo routed to your taxable Individual Brokerage to build the penalty-free bridge fund.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 7: 2045 - 2065 PLAN (THE COAST ERA) -->
+    <div id="Plan2045" class="tabcontent">
+        <div class="card full-width">
+            <h2>2045 – 2065: The Coast FIRE Era & Lifestyle Maintenance</h2>
+            <p>At age 45, you exit high-stress corporate software engineering and transition into a highly enjoyable, low-stress lifestyle job earning a baseline of <strong>$85,000 per year gross</strong>. Meanwhile, your partner's career has peaked at roughly <strong>$120,000 per year</strong>.</p>
+
+            <h3 style="margin-top: 30px;">Post-45 Household Cash Flow Breakdown</h3>
+            <div class="code-block">
+[Combined Net Monthly Take-Home: $13,500.00] (Married Filing Jointly)
+       │
+       ├──► [Premium Rent & Utilities: -$4,500.00]
+       ├──► [Premium Living & Fun:     -$5,000.00]
+       │
+       └──► Remaining Discretionary Surplus: +$4,000.00 / month
+            </div>
+
+            <div class="split-box">
+                <div class="split-half">
+                    <h3 style="margin-top: 0;">1. Maintaining the Lifestyle</h3>
+                    <p><strong>Yes, your lifestyle is completely sustainable.</strong> Because your combined paycheck cash flow ($13,500) naturally outpaces your high-end lifestyle expenses ($9,500), you can live luxuriously in semi-retirement without ever touching your core investments.</p>
+                </div>
+                <div class="split-half">
+                    <h3 style="margin-top: 0; color: var(--accent);">2. The Compounding Machine</h3>
+                    <p>By allowing your <strong>~$1.78 Million</strong> age-45 manual nest egg to remain 100% untouched and automatically compounding in the market for 20 years, your portfolio passively expands to roughly <strong>$8.3 Million by 2065</strong>, completely independent of your separate workplace 401(k) assets.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 8: WHAT-IF SCENARIOS -->
+    <div id="PlanWhatIf" class="tabcontent">
+        <div class="card full-width">
+            <h2>"What If" Risk Assessment & Mitigation Matrix</h2>
+            <p>To ensure this financial roadmap survives real-world disruptions, here is the strategic containment framework for five major systemic risks.</p>
+            
+            <div style="overflow-x: auto;">
+                <table>
+                    <tr>
+                        <th style="width: 25%;">Risk Event</th>
+                        <th style="width: 30%;">Potential Impact on Plan</th>
+                        <th style="width: 45%;">Tactical Mitigation Strategy</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Partner Stops Working (2040)</strong></td>
+                        <td>Halts their independent income and cuts household cash flow by roughly 35%.</td>
+                        <td>Your individual software salary ($200k cap) easily covers the baseline living expenses. You temporarily scale your $5,000/month luxury fun budget back to a standard $2,500 baseline, keeping your core retirement tracks entirely intact.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Caring for Aging Parents</strong></td>
+                        <td>Introduces sudden, unbudgeted medical or assisted-living outlays.</td>
+                        <td>At age 45, your strategy builds a completely liquid, penalty-free bridge fund of <strong>$367,043</strong> across your brokerage account and Roth IRA contribution basis. This cash acts as an emergency shield for familial care without disrupting your 401(k).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Severe Stock Market Crash</strong></td>
+                        <td>Erases paper value right at your retirement transition.</td>
+                        <td>Because you utilize <strong>Coast FIRE</strong>, you never sell assets during a downturn. Your $85k lifestyle job and your partner's salary fully cover your daily bills, allowing your portfolio to sit completely undisturbed and recover naturally.</td>
+                    </tr>
+                    <!-- <tr>
+                        <td><strong>Relationship Separation</strong></td>
+                        <td>Splits combined assets in half and duplicates housing costs ($4,500 rent each).</td>
+                        <td>Your solo software engineer earning capacity ($200k cap) serves as your primary survival shield. Your individual income can easily absorb an independent $3,500 rent and fixed cost profile while maintaining a standard 15% savings rate.</td>
+                    </tr> -->
+                    <tr>
+                        <td><strong>Severe Tech Sector Layoffs (5 Yrs)</strong></td>
+                        <td>Imposes a dramatic, long-term pay cut or extended unemployment.</td>
+                        <td>Your short-term strategy establishes an accelerating HYSA pipeline. If a layoff hits, your partner's steady university stipend serves as a recurring baseline to cover core survival costs while you source a new engineering role.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // ==========================================
+    // 1. NAVIGATION & UI LOGIC
+    // ==========================================
+    function openTab(evt, tabName, customActiveId) {
+        var i, tabcontent, tablinks;
+        
+        // Hide all tabs
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        
+        // Remove active class from all buttons and dropdown containers
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        var dropdowns = document.getElementsByClassName("dropdown");
+        for (i = 0; i < dropdowns.length; i++) {
+            dropdowns[i].className = dropdowns[i].className.replace(" active-dropdown", "");
+        }
+        
+        // Show specific tab
+        document.getElementById(tabName).style.display = "block";
+        
+        // Handle Active states based on what was clicked
+        if (customActiveId) {
+            var customEl = document.getElementById(customActiveId);
+            if(customEl) {
+                if (customEl.classList.contains('dropdown')) {
+                    customEl.className += " active-dropdown";
+                } else {
+                    customEl.className += " active";
+                }
+            }
+        } else if (evt && evt.currentTarget) {
+            evt.currentTarget.className += " active";
+            if (evt.currentTarget.parentElement && evt.currentTarget.parentElement.classList.contains('dropdown')) {
+                evt.currentTarget.parentElement.className += " active-dropdown";
+            }
+        } else {
+            // Default to Home if triggered programmatically without specific target
+            const homeBtn = document.getElementById('homeTabBtn');
+            if(homeBtn) homeBtn.className += " active";
+        }
+
+        // Render charts on tab switch if they exist
+        if(tabName === 'PlanHome' && window.myChart) window.myChart.update();
+        if(tabName === 'Plan2027') {
+            if(window.moveInChartInstance) window.moveInChartInstance.update();
+            if(window.aptChart) window.aptChart.update();
+            if(window.pieChart) window.pieChart.update();
+        }
+    }
+
+    function navigateAndScroll(evt, tabName, elementId, parentDropdownId) {
+        evt.preventDefault();
+        openTab(null, tabName, parentDropdownId);
+        
+        setTimeout(() => {
+            const el = document.getElementById(elementId);
+            if(el) {
+                el.scrollIntoView({behavior: "smooth", block: "start"});
+            }
+        }, 100);
+    }
+
+    function toggleMoveIn(season) {
+        const winterBtn = document.getElementById('btnWinterToggle');
+        const summerBtn = document.getElementById('btnSummerToggle');
+        const winterContent = document.getElementById('winterContent');
+        const summerContent = document.getElementById('summerContent');
+
+        if(!winterBtn || !summerBtn || !winterContent || !summerContent) return;
+
+        if (season === 'winter') {
+            winterContent.style.display = 'block';
+            summerContent.style.display = 'none';
+            winterBtn.style.backgroundColor = '#3498db';
+            winterBtn.style.color = 'white';
+            summerBtn.style.backgroundColor = 'transparent';
+            summerBtn.style.color = '#f39c12';
+        } else {
+            winterContent.style.display = 'none';
+            summerContent.style.display = 'block';
+            summerBtn.style.backgroundColor = '#f39c12';
+            summerBtn.style.color = 'white';
+            winterBtn.style.backgroundColor = 'transparent';
+            winterBtn.style.color = '#3498db';
+        }
+    }
+
+    // ==========================================
+    // 2. CHART INITIALIZATIONS
+    // ==========================================
+    function initCharts() {
+        // A. Home Dashboard Line Chart
+        const homeCanvas = document.getElementById('netWorthChart');
+        if (homeCanvas) {
+            const ctx1 = homeCanvas.getContext('2d');
+            window.myChart = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: ['Age 25', 'Age 30', 'Age 35', 'Age 40', 'Age 45 (Coast FIRE)', 'Age 55', 'Age 65'],
+                    datasets: [
+                        {
+                            label: 'Optimized Path (Aggressive Invest & Debt Blitz)',
+                            data: [24000, 125000, 320000, 750000, 1780000, 3800000, 8300000],
+                            borderColor: '#27ae60',
+                            backgroundColor: 'rgba(39, 174, 96, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'Unoptimized Path (CC Minimums & Late Investing)',
+                            data: [-7358, -5000, 20000, 60000, 150000, 400000, 950000],
+                            borderColor: '#c0392b',
+                            backgroundColor: 'rgba(192, 57, 43, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { display: true, text: 'Net Worth Trajectory Over Time', font: { size: 16 } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) { label += ': '; }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(value) {
+                                    if (value >= 1000000) return '$' + (value / 1000000) + 'M';
+                                    if (value >= 1000) return '$' + (value / 1000) + 'k';
+                                    return '$' + value;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // B. Apartment Savings Bar Chart (2027 Tab)
+        const aptCanvas = document.getElementById('apartmentSavingsChart');
+        if(aptCanvas) {
+            const ctx2 = aptCanvas.getContext('2d');
+            window.aptChart = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: ['Dec 2026', 'Jan 7', 'Jan 21', 'Feb 4', 'Feb 18 (Move-In)'],
+                    datasets: [{
+                        label: 'Cumulative Apartment Fund ($)',
+                        data: [6235, 7035, 7835, 8635, 9630],
+                        backgroundColor: '#3498db',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { display: true, text: 'Final Move-In Capital Growth', font: { size: 14 } },
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { min: 5000, max: 10000 }
+                    }
+                }
+            });
+        }
+    }
+
+    // ==========================================
+    // 3. 2027 TAB CALCULATORS
+    // ==========================================
+    function initMoveInAnalyzer() {
+        if(!document.getElementById('wRentInput')) return;
+
+        const wRent = parseFloat(document.getElementById('wRentInput').value);
+        const sRent = parseFloat(document.getElementById('sRentInput').value);
+        const delay = parseInt(document.getElementById('delayInput').value);
+        const apr = parseFloat(document.getElementById('aprInput').value);
+
+        document.getElementById('wRentLabel').innerText = '$' + wRent.toLocaleString();
+        document.getElementById('sRentLabel').innerText = '$' + sRent.toLocaleString();
+        document.getElementById('delayLabel').innerText = delay + (delay === 1 ? ' Month' : ' Months');
+        document.getElementById('aprLabel').innerText = apr.toFixed(2) + '%';
+
+        const upfrontCash = wRent * delay;
+        const estInterestSaved = upfrontCash * (apr / 100) * 1.33; 
+        const totalAdvantage = upfrontCash + estInterestSaved;
+        const rentPremium = sRent - wRent;
+
+        let breakevenMonth = "Never";
+        let breakevenValue = 0;
+        if (rentPremium > 0) {
+            breakevenValue = totalAdvantage / rentPremium;
+            breakevenMonth = "Month " + Math.ceil(breakevenValue);
+        } else if (rentPremium <= 0) {
+            breakevenMonth = "Instant Win";
+        }
+
+        document.getElementById('upfrontCalc').innerText = '$' + Math.round(upfrontCash).toLocaleString();
+        document.getElementById('intSavedCalc').innerText = '+$' + Math.round(estInterestSaved).toLocaleString();
+        document.getElementById('breakevenCalc').innerText = breakevenMonth;
+
+        const labels = [];
+        const summerData = [];
+        const winterData = [];
+
+        for (let i = 0; i <= 60; i += 6) {
+            labels.push('Month ' + i);
+            winterData.push(0); 
+            if (rentPremium > 0) {
+                summerData.push(totalAdvantage - (rentPremium * i));
+            } else {
+                summerData.push(totalAdvantage); 
+            }
+        }
+
+        const canvasEl = document.getElementById('moveInChart');
+        if(!canvasEl) return;
+
+        if (window.moveInChartInstance) {
+            window.moveInChartInstance.data.labels = labels;
+            window.moveInChartInstance.data.datasets[0].data = summerData;
+            window.moveInChartInstance.update();
+        } else {
+            const ctx = canvasEl.getContext('2d');
+            window.moveInChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Summer Move-In Net Financial Advantage ($)',
+                            data: summerData,
+                            borderColor: '#8e44ad',
+                            backgroundColor: 'rgba(142, 68, 173, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.1,
+                            fill: true
+                        },
+                        {
+                            label: 'Winter Move-In Baseline ($0)',
+                            data: winterData,
+                            borderColor: '#34495e',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            tension: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { display: true, text: '60-Month Timeline: When Does Summer Rent Destroy Your Upfront Savings?', font: { size: 14 } }
+                    },
+                    scales: {
+                        y: { title: { display: true, text: 'Net Financial Advantage ($)' } }
+                    }
+                }
+            });
+        }
+    }
+
+    function recalculate2027() {
+        if(!document.getElementById('withdrawInput')) return;
+        const withdrawal = parseFloat(document.getElementById('withdrawInput').value);
+        document.getElementById('withdrawLabel').innerText = '$' + withdrawal.toLocaleString();
+
+        const baseDeficit = 297.60;
+        const guiltFree = withdrawal - baseDeficit;
+        const remaining = 6630 - (withdrawal * 6);
+
+        document.getElementById('guiltFreeCalc').innerText = '$' + guiltFree.toFixed(2);
+        
+        const remEl = document.getElementById('remainingSavingsCalc');
+        remEl.innerText = '$' + remaining.toFixed(2);
+        if (remaining < 0) {
+            remEl.style.color = '#c0392b';
+        } else {
+            remEl.style.color = 'var(--primary)';
+        }
+    }
+
+    function recalculateFixedExpenses() {
+        if(!document.getElementById('expRent')) return;
+
+        const r = parseFloat(document.getElementById('expRent').value);
+        const u = parseFloat(document.getElementById('expUtil').value);
+        const c = parseFloat(document.getElementById('expCar').value);
+        const g = parseFloat(document.getElementById('expGroc').value);
+        const cl = parseFloat(document.getElementById('expCloth').value);
+        const p = parseFloat(document.getElementById('expPhone').value);
+        const s = parseFloat(document.getElementById('expSub').value);
+
+        document.getElementById('expRentLabel').innerText = '$' + r.toLocaleString();
+        document.getElementById('expUtilLabel').innerText = '$' + u.toLocaleString();
+        document.getElementById('expCarLabel').innerText = '$' + c.toLocaleString();
+        document.getElementById('expGrocLabel').innerText = '$' + g.toLocaleString();
+        document.getElementById('expClothLabel').innerText = '$' + cl.toLocaleString();
+        document.getElementById('expPhoneLabel').innerText = '$' + p.toLocaleString();
+        document.getElementById('expSubLabel').innerText = '$' + s.toLocaleString();
+
+        const baseSum = r + u + c + g + cl + p + s;
+        const misc = baseSum * 0.08;
+        const totalFixed = baseSum + misc;
+
+        document.getElementById('expMiscCalc').innerText = '$' + misc.toFixed(2);
+        document.getElementById('expTotalCalc').innerText = '$' + totalFixed.toFixed(2);
+
+        const income = 7956.40;
+        const savings = 1500;
+        const investments = 1000;
+        const debtBlitz = 950;
+        const buffer = income - (totalFixed + savings + investments + debtBlitz);
+
+        const bufferText = document.getElementById('bufferOutputText');
+        const bufferList = document.getElementById('bufferListItem');
+        
+        if (buffer >= 0) {
+            bufferText.innerText = '$' + buffer.toFixed(2);
+            bufferList.style.color = '#333';
+            bufferText.style.color = '#9b59b6';
+        } else {
+            bufferText.innerText = '-$' + Math.abs(buffer).toFixed(2) + ' (DEFICIT)';
+            bufferList.style.color = '#c0392b';
+            bufferText.style.color = '#c0392b';
+        }
+
+        const pieCanvas = document.getElementById('integrationPieChart');
+        if(!pieCanvas) return;
+
+        if (window.pieChart) {
+            window.pieChart.data.datasets[0].data = [totalFixed, savings, investments, debtBlitz, Math.max(0, buffer)];
+            window.pieChart.update();
+        } else {
+            const ctx3 = pieCanvas.getContext('2d');
+            window.pieChart = new Chart(ctx3, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Fixed Living', 'Core Savings', 'Investments', 'Debt Blitz', 'Buffer'],
+                    datasets: [{
+                        data: [totalFixed, savings, investments, debtBlitz, Math.max(0, buffer)],
+                        backgroundColor: ['#e74c3c', '#3498db', '#27ae60', '#f39c12', '#9b59b6'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } } 
+                }
+            });
+        }
+    }
+
+    function recalculate2027Allocations() {
+        if(!document.getElementById('wedAllocInput')) return;
+
+        const wed = parseFloat(document.getElementById('wedAllocInput').value);
+        const emg = parseFloat(document.getElementById('emgAllocInput').value);
+        const vac = parseFloat(document.getElementById('vacAllocInput').value);
+
+        document.getElementById('wedAllocLabel').innerText = '$' + wed.toLocaleString();
+        document.getElementById('emgAllocLabel').innerText = '$' + emg.toLocaleString();
+        document.getElementById('vacAllocLabel').innerText = '$' + vac.toLocaleString();
+
+        const total = wed + emg + vac;
+        const remaining = 1500 - total;
+        const warningEl = document.getElementById('allocWarning');
+
+        if (remaining !== 0) {
+            warningEl.innerHTML = `<span style="color: #c0392b;">⚠️ You are ${remaining > 0 ? 'under' : 'over'} your $1,500 monthly budget by $${Math.abs(remaining).toFixed(2)}</span>`;
+        } else {
+            warningEl.innerHTML = `<span style="color: #27ae60;">✅ Perfectly balanced to your $1,500 monthly target.</span>`;
+        }
+
+        const wedProj = (wed * 12) + 7600; 
+        const emgProj = (emg * 12);
+        const vacProj = (vac * 12);
+
+        document.getElementById('wedProjCalc').innerText = '$' + wedProj.toLocaleString();
+        document.getElementById('emgProjCalc').innerText = '$' + emgProj.toLocaleString();
+        document.getElementById('vacProjCalc').innerText = '$' + vacProj.toLocaleString();
+    }
+
+    // ==========================================
+    // 4. COAST FIRE DASHBOARD LOGIC
+    // ==========================================
+    function recalculateDashboard() {
+        if(!document.getElementById('rentInput')) return;
+
+        const rent = parseFloat(document.getElementById('rentInput').value);
+        const fun = parseFloat(document.getElementById('funInput').value);
+        const annualSaveTarget = parseFloat(document.getElementById('saveInput').value);
+        const coastAge = parseInt(document.getElementById('ageInput').value);
+        const salaryCap = parseFloat(document.getElementById('capInput').value);
+
+        document.getElementById('rentLabel').innerText = '$' + rent.toLocaleString();
+        document.getElementById('funLabel').innerText = '$' + fun.toLocaleString();
+        document.getElementById('saveLabel').innerText = '$' + annualSaveTarget.toLocaleString();
+        document.getElementById('ageLabel').innerText = coastAge;
+        document.getElementById('capLabel').innerText = '$' + salaryCap.toLocaleString();
+
+        const combinedTakeHome = 12500; 
+        const monthlySaveTarget = annualSaveTarget / 12;
+        const totalOutflows = rent + fun + monthlySaveTarget;
+        const surplus = combinedTakeHome - totalOutflows;
+
+        const surplusCalcEl = document.getElementById('surplusCalc');
+        surplusCalcEl.innerText = (surplus >= 0 ? '+' : '') + '$' + surplus.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        
+        if(surplus < 0) {
+            surplusCalcEl.style.color = '#c0392b';
+            document.getElementById('surplusNote').innerText = 'Warning: Deficit. Violates investment floors.';
+        } else {
+            surplusCalcEl.style.color = 'var(--accent)';
+            if(surplus >= 1250) {
+                document.getElementById('surplusNote').innerText = 'Secure. Full capacity to max out Roth IRAs.';
+            } else {
+                document.getElementById('surplusNote').innerText = 'Secure cash flow, but partial Roth IRA max trade-off required.';
+            }
+        }
+
+        const yearsToAccumulate = coastAge - 25;
+        let baselinePortfolio = 31678; 
+        let monthlyContribution = 1000; 
+        let r = 0.08 / 12;
+
+        for (let i = 0; i < yearsToAccumulate * 12; i++) {
+            baselinePortfolio = (baselinePortfolio * (1 + r)) + monthlyContribution;
+        }
+        document.getElementById('coastNwCalc').innerText = '$' + Math.round(baselinePortfolio).toLocaleString();
+
+        const coastYearsLeft = 65 - coastAge;
+        let finalPortfolio = baselinePortfolio;
+        
+        for (let j = 0; j < coastYearsLeft * 12; j++) {
+            finalPortfolio = finalPortfolio * (1 + r);
+        }
+
+        let estimated401k = 5401613; 
+        if (salaryCap !== 200000) {
+            estimated401k = estimated401k * (salaryCap / 200000);
+        }
+
+        const grandTotal = finalPortfolio + estimated401k;
+        document.getElementById('finalNwCalc').innerText = '$' + Math.round(grandTotal).toLocaleString();
+    }
+
+    // ==========================================
+    // 5. CREDIT CARD VISUALIZERS
+    // ==========================================
+    function recalculateCC() {
+        if(!document.getElementById('spendInput')) return;
+
+        const monthlySpend = parseFloat(document.getElementById('spendInput').value);
+        document.getElementById('spendLabel').innerText = '$' + monthlySpend.toLocaleString();
+        
+        let balance = 7358.01;
+        const apr = 0.2549;
+        const monthlyRate = apr / 12;
+        const paymentAllocation = 2000;
+        const monthNames = [
+            "July 2026", "August 2026", "September 2026", "October 2026", 
+            "November 2026", "December 2026", "January 2027", "February 2027", 
+            "March 2027", "April 2027", "May 2027", "June 2027", "July 2027",
+            "August 2027", "September 2027", "October 2027", "November 2027", "December 2027"
+        ];
+        
+        let htmlOut = `<table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.95rem;">
+            <tr>
+                <th style="background: var(--primary); color: white; padding: 10px; text-align: left;">Month</th>
+                <th style="background: var(--primary); color: white; padding: 10px; text-align: left;">Starting Balance</th>
+                <th style="background: var(--primary); color: white; padding: 10px; text-align: left;">Est. Interest</th>
+                <th style="background: var(--primary); color: white; padding: 10px; text-align: left;">Tuition Reimb.</th>
+                <th style="background: var(--primary); color: white; padding: 10px; text-align: left;">Net Payment</th>
+                <th style="background: var(--primary); color: white; padding: 10px; text-align: left;">Ending Balance</th>
+            </tr>`;
+            
+        let totalInterest = 0;
+        let currentMonthIdx = 0;
+        
+        if (monthlySpend + (balance * monthlyRate) >= paymentAllocation) {
+            document.getElementById('ccTableContainer').innerHTML = `<p style="color:red; font-weight:bold; text-align:center;">Warning: Monthly spending and interest exceeds your $2,000 payment allocation. The balance will grow infinitely.</p>`;
+            document.getElementById('ccPayoffDate').innerText = "Never";
+            document.getElementById('ccTotalInterest').innerText = "$∞";
+            return;
+        }
+
+        while(balance > 0 && currentMonthIdx < monthNames.length) {
+            let starting = balance;
+            let interest = balance * monthlyRate;
+            totalInterest += interest;
+            
+            let reimb = (currentMonthIdx === 1) ? 750 : 0; 
+            let effectivePaymentPower = paymentAllocation - monthlySpend; 
+            let requiredToZero = starting + interest - reimb;
+            
+            let finalPaymentApplied = 0;
+            
+            if (requiredToZero <= effectivePaymentPower) {
+                finalPaymentApplied = requiredToZero;
+                balance = 0;
+            } else {
+                finalPaymentApplied = effectivePaymentPower;
+                balance = starting + interest - reimb - finalPaymentApplied;
+            }
+            
+            let monthLabel = monthNames[currentMonthIdx];
+            let rowStyle = currentMonthIdx % 2 === 0 ? "background-color: #f9f9f9;" : "";
+            
+            htmlOut += `<tr style="${rowStyle}">
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>${monthLabel}</strong></td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">$${starting.toFixed(2)}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd; color:#c0392b;">+$${interest.toFixed(2)}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd; color:#27ae60;">${reimb > 0 ? '-$'+reimb.toFixed(2) : '$0.00'}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">-$${finalPaymentApplied.toFixed(2)}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>$${balance.toFixed(2)}</strong></td>
+            </tr>`;
+            
+            currentMonthIdx++;
+        }
+        
+        if (balance > 0) {
+            htmlOut += `<tr><td colspan="6" style="padding: 10px; text-align: center;"><em>Timeline extends beyond December 2027.</em></td></tr>`;
+        }
+        htmlOut += `</table>`;
+        
+        document.getElementById('ccTableContainer').innerHTML = htmlOut;
+        document.getElementById('ccPayoffDate').innerText = monthNames[currentMonthIdx - 1];
+        document.getElementById('ccTotalInterest').innerText = '$' + totalInterest.toFixed(2);
+    }
+
+    function recalculateDiscover() {
+        if(!document.getElementById('medPayInput')) return;
+
+        const medPay = parseFloat(document.getElementById('medPayInput').value);
+        const basePay = parseFloat(document.getElementById('basePayInput').value);
+        const bonusPay = parseFloat(document.getElementById('bonusInput').value);
+        const newCharges = parseFloat(document.getElementById('discSpendInput').value);
+        
+        document.getElementById('medPayLabel').innerText = '$' + medPay.toLocaleString();
+        document.getElementById('basePayLabel').innerText = '$' + basePay.toLocaleString();
+        document.getElementById('bonusLabel').innerText = '$' + bonusPay.toLocaleString();
+        document.getElementById('discSpendLabel').innerText = '$' + newCharges.toLocaleString();
+        
+        let balance = 16117.41; 
+        const blendedAPR = 0.1878; 
+        const monthlyRate = blendedAPR / 12;
+        
+        let htmlOut = `<table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.95rem;">
+            <tr>
+                <th style="background: #e67e22; color: white; padding: 10px; text-align: center;">Month</th>
+                <th style="background: #e67e22; color: white; padding: 10px; text-align: center;">Starting Balance</th>
+                <th style="background: #e67e22; color: white; padding: 10px; text-align: center;">Est. Interest</th>
+                <th style="background: #e67e22; color: white; padding: 10px; text-align: center;">Allocated Payment</th>
+                <th style="background: #e67e22; color: white; padding: 10px; text-align: center;">Net Progress</th>
+                <th style="background: #e67e22; color: white; padding: 10px; text-align: center;">Ending Balance</th>
+            </tr>`;
+            
+        let totalInterest = 0;
+        let currentDate = new Date(2026, 6); 
+        let iteration = 0;
+        let payoffMonthStr = "Never (Payments too low)";
+        
+        if (newCharges + (balance * monthlyRate) >= medPay && basePay <= newCharges + (balance * monthlyRate)) {
+            document.getElementById('discTableContainer').innerHTML = `<p style="color:red; font-weight:bold; text-align:center;">Warning: Monthly spending and interest exceeds your payment allocations. The balance will grow infinitely.</p>`;
+            document.getElementById('discPayoffDate').innerText = "Never";
+            document.getElementById('discTotalInterest').innerText = "$∞";
+            return;
+        }
+
+        while(balance > 0 && iteration < 120) { 
+            let starting = balance;
+            let interest = balance * monthlyRate;
+            totalInterest += interest;
+            
+            let monthName = currentDate.toLocaleString('default', { month: 'long', year: 'numeric' });
+            let currentYear = currentDate.getFullYear();
+            let currentMonth = currentDate.getMonth(); 
+            
+            let paymentAllocation = 0;
+            let isMedicalSeason = (currentYear === 2026 && currentMonth >= 6 && currentMonth <= 11);
+            let isBonusMonth = (currentYear === 2027 && currentMonth === 2); 
+            
+            if (isMedicalSeason) {
+                paymentAllocation = medPay;
+            } else {
+                paymentAllocation = basePay;
+            }
+            
+            if (isBonusMonth) {
+                paymentAllocation += bonusPay;
+            }
+            
+            let effectivePaymentPower = paymentAllocation - newCharges;
+            let requiredToZero = starting + interest;
+            let finalPaymentApplied = 0;
+            
+            if (requiredToZero <= effectivePaymentPower) {
+                finalPaymentApplied = requiredToZero;
+                balance = 0;
+                payoffMonthStr = monthName;
+            } else {
+                finalPaymentApplied = effectivePaymentPower;
+                balance = starting + interest - finalPaymentApplied;
+            }
+            
+            let rowStyle = iteration % 2 === 0 ? "background-color: #f9f9f9;" : "";
+            let specialTag = isBonusMonth ? ` <span style="font-size:0.8em; color:#27ae60; font-weight:bold;">(+BONUS)</span>` : (isMedicalSeason ? ` <span style="font-size:0.8em; color:#f39c12; font-weight:bold;">(MED)</span>` : "");
+            
+            htmlOut += `<tr style="${rowStyle}">
+                <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><strong>${monthName}</strong></td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;">$${starting.toFixed(2)}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center; color:#c0392b;">+$${interest.toFixed(2)}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;">$${paymentAllocation.toFixed(2)}${specialTag}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center; color:#27ae60;">-$${finalPaymentApplied.toFixed(2)}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><strong>$${balance.toFixed(2)}</strong></td>
+            </tr>`;
+            
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            iteration++;
+        }
+        
+        if (balance > 0) {
+            htmlOut += `<tr><td colspan="6" style="padding: 10px; text-align: center;"><em>Timeline extends beyond 10 years. Increase base payments.</em></td></tr>`;
+        }
+        htmlOut += `</table>`;
+        
+        document.getElementById('discTableContainer').innerHTML = htmlOut;
+        document.getElementById('discPayoffDate').innerText = payoffMonthStr;
+        document.getElementById('discTotalInterest').innerText = '$' + totalInterest.toFixed(2);
+    }
+
+    // ==========================================
+    // 6. INITIALIZATION & EVENT BINDING
+    // ==========================================
+    function attachAllEventListeners() {
+        // Move-In Analyzer
+        const miInputs = ['wRentInput', 'sRentInput', 'delayInput', 'aprInput'];
+        miInputs.forEach(id => {
+            const el = document.getElementById(id);
+            if(el) el.addEventListener('input', initMoveInAnalyzer);
+        });
+
+        // Solo Subsidy
+        const wInput = document.getElementById('withdrawInput');
+        if(wInput) wInput.addEventListener('input', recalculate2027);
+
+        // Fixed Expenses
+        const expenseInputs = ['expRent', 'expUtil', 'expCar', 'expGroc', 'expCloth', 'expPhone', 'expSub'];
+        expenseInputs.forEach(id => {
+            const el = document.getElementById(id);
+            if(el) el.addEventListener('input', recalculateFixedExpenses);
+        });
+
+        // Core Savings Allocator
+        const saveAllocInputs = ['wedAllocInput', 'emgAllocInput', 'vacAllocInput'];
+        saveAllocInputs.forEach(id => {
+            const el = document.getElementById(id);
+            if(el) el.addEventListener('input', recalculate2027Allocations);
+        });
+
+        // Macro Dashboard
+        const dashInputs = ['rentInput', 'funInput', 'saveInput', 'ageInput', 'capInput'];
+        dashInputs.forEach(id => {
+            const el = document.getElementById(id);
+            if(el) el.addEventListener('input', recalculateDashboard);
+        });
+
+        // Apple Card
+        const appleInput = document.getElementById('spendInput');
+        if(appleInput) appleInput.addEventListener('input', recalculateCC);
+
+        // Discover Card
+        const discInputs = ['medPayInput', 'basePayInput', 'bonusInput', 'discSpendInput'];
+        discInputs.forEach(id => {
+            const el = document.getElementById(id);
+            if(el) el.addEventListener('input', recalculateDiscover);
+        });
+    }
+
+    // Run everything on page load
+    window.onload = function() {
+        attachAllEventListeners();
+        
+        // Initialize all components
+        initCharts();
+        initMoveInAnalyzer();
+        recalculate2027();
+        recalculateFixedExpenses();
+        recalculate2027Allocations();
+        recalculateDashboard();
+        recalculateCC();
+        recalculateDiscover();
+    };
+</script>
+</body>
+</html>
