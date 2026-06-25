@@ -15,6 +15,7 @@
             --text-color: #333333;
             --border-color: #e0e0e0;
             --tab-bg: #e8ecf1;
+            --tab-bg-top: #bcc1c5;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -60,6 +61,19 @@
             display: flex;
             flex-wrap: wrap;
             overflow: visible; /* Required to show dropdown */
+            
+            /* Sticky Positioning */
+            position: sticky;
+            top: -1px; /* The -1px helps the observer trigger cleanly */
+            z-index: 100;
+            transition: box-shadow 0.3s ease, border-bottom 0.3s ease; /* Smooth transition */
+        }
+        /* The class applied when the nav hits the top */
+        .tab.is-pinned {
+            border-bottom: 1px solid rgba(44, 62, 80, 0.5); /* Subtle primary color border */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Soft opaque shadow below it */
+            border-radius: 8px; /* Optional: rounds the bottom corners slightly when detached from the content below */
+            /* background-color: var(--tab-bg-top); Slightly darker background to indicate it's pinned */
         }
         .tab button {
             background-color: inherit;
@@ -146,6 +160,9 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             border: 1px solid var(--border-color);
             margin-bottom: 20px;
+            
+            /* Prevents sticky tab from covering titles when jumping to a section */
+            scroll-margin-top: 70px; 
         }
         .full-width {
             grid-column: 1 / -1;
@@ -267,6 +284,9 @@
         <h1>Strategic Financial Plan Playground</h1>
         <p>Interactive Roadmap & Sandbox Strategy (2026 – 2065)</p>
     </header>
+    
+    <!-- NEW: Invisible sentinel to trigger the sticky shadow -->
+    <div id="nav-sentinel" style="position: absolute; top: 120px; height: 1px; width: 100%;"></div>
 
     <!-- TAB NAVIGATION -->
     <div class="tab">
@@ -277,10 +297,25 @@
                 <a href="#" onclick="navigateAndScroll(event, 'Plan6Month', 'core-actions', 'dropdown6Month')">Core Strategic Actions</a>
                 <a href="#" onclick="navigateAndScroll(event, 'Plan6Month', 'apple-sim', 'dropdown6Month')">Apple Card Visualizer</a>
                 <a href="#" onclick="navigateAndScroll(event, 'Plan6Month', 'discover-sim', 'dropdown6Month')">Discover Visualizer</a>
+                <a href="#" onclick="navigateAndScroll(event, 'Plan6Month', 'healthcare-section', 'dropdown6Month')">Healthcare Strategy</a>
             </div>
         </div>
 
-        <button class="tablinks" onclick="openTab(event, 'Plan2027')">2027</button>
+        <!-- DROPDOWN TAB FOR 2027 PLAN -->
+        <div class="dropdown" id="dropdown2027">
+            <button class="dropbtn tablinks" onclick="openTab(event, 'Plan2027')" id="btn2027">2027</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="navigateAndScroll(event, 'Plan2027', 'verdict-section', 'dropdown2027')">The Verdict</a>
+                <a href="#" onclick="navigateAndScroll(event, 'Plan2027', 'analyzer-section', 'dropdown2027')">Move-In Analyzer</a>
+                <a href="#" onclick="navigateAndScroll(event, 'Plan2027', 'paths-section', 'dropdown2027')">Move-In Paths</a>
+                <a href="#" onclick="navigateAndScroll(event, 'Plan2027', 'takehome-section', 'dropdown2027')">Take-Home Pay</a>
+                <a href="#" onclick="navigateAndScroll(event, 'Plan2027', 'waterfall-section', 'dropdown2027')">Investment Waterfall</a>
+                <a href="#" onclick="navigateAndScroll(event, 'Plan2027', 'integration-section', 'dropdown2027')">The Big Move</a>
+                <a href="#" onclick="navigateAndScroll(event, 'Plan2027', 'savings-section', 'dropdown2027')">Savings Allocator</a>
+                <a href="#" onclick="navigateAndScroll(event, 'Plan2027', 'investments-section', 'dropdown2027')">Core Investments</a>
+            </div>
+        </div>
+
         <button class="tablinks" onclick="openTab(event, 'Plan2028')">2028</button>
         <button class="tablinks" onclick="openTab(event, 'Plan2029')">2029</button>
         <button class="tablinks" onclick="openTab(event, 'Plan2030')">2030-35</button>
@@ -293,14 +328,14 @@
     <div id="PlanHome" class="tabcontent" style="display: block;">
         <div class="card full-width">
             <h2>The Master Strategy Overview</h2>
-            <p>Welcome to your multi-decade financial sandbox. This document outlines the exact mechanics to transition from high-interest debt elimination into extreme wealth accumulation, terminating in complete lifestyle freedom by age 45.</p>
+            <p>Welcome to Rajna/Woody's multi-decade financial sandbox. This document outlines the exact mechanics to transition from high-interest debt elimination into extreme wealth accumulation, terminating in complete lifestyle freedom by age 45.</p>
             
             <div class="split-box">
                 <div class="split-half">
                     <h3 style="margin-top: 0; color: var(--accent);">Our Goals</h3>
                     <ul>
-                        <li><strong>Debt Freedom:</strong> Eradicate consumer credit debt before solo apartment living begins.</li>
-                        <li><strong>Milestone Cash-Flow:</strong> Pay for the 2028 engagement, 2029 wedding, and a reliable partner vehicle entirely in cash.</li>
+                        <li><strong>Debt Freedom:</strong> Eradicate consumer credit debt before moving in together.</li>
+                        <li><strong>Milestone Management:</strong> Pay for the 2028 engagement, 2029 wedding, and a new car for Rajna as up front as possible.</li>
                         <li><strong>Premium Living:</strong> Comfortably scale into a high-end, $9,500/month lifestyle by our mid-30s.</li>
                         <li><strong>Coast FIRE by 45:</strong> Accumulate $1.78M in manual investments so you can step away from software engineering and "coast" in a low-stress $85,000/year lifestyle job.</li>
                     </ul>
@@ -316,7 +351,7 @@
             </div>
 
             <h3 style="margin-top: 30px;">The Trajectory Impact: Optimized vs. Unoptimized</h3>
-            <p>Your choices over the next 12 to 24 months dictate the trajectory of your next 40 years. The chart below demonstrates the compounding difference between executing our <strong>Aggressive Debt & Investing Strategy</strong> versus falling into the trap of paying credit card minimums and delaying your core investment allocations.</p>
+            <p>Our choices over the next 12 to 24 months dictate the trajectory of the next 40 years. The chart below demonstrates the compounding difference between executing our <strong>Aggressive Debt & Investing Strategy</strong> versus falling into the trap of paying credit card minimums and delaying our core investment allocations.</p>
             
             <div class="chart-container">
                 <canvas id="netWorthChart"></canvas>
@@ -428,222 +463,419 @@
                 <!-- Dynamic Table Generated via JS -->
             </div>
         </div>
+
+        <!-- HEALTHCARE STRATEGY: THE HDHP & HSA SWITCH -->
+        <div id="healthcare-section" class="card full-width" style="border: 2px solid #3498db; margin-top: 20px;">
+            <h2>🏥 Healthcare Strategy: The HDHP & HSA Switch (Sept 2026 Open Enrollment)</h2>
+            <p>In September 2026, you will have the opportunity to change your medical plan for the 2027 calendar year. Moving from your current plan to a High Deductible Health Plan (HDHP) fundamentally alters your wealth-accumulation strategy.</p>
+            
+            <div class="split-box">
+                <div class="split-half">
+                    <h3 style="margin-top: 0;">1. What we discussed about the HSA for 2027</h3>
+                    <p>Currently, your workplace offers a Flexible Spending Account (FSA). FSAs are "use-it-or-lose-it" accounts that <strong>cannot be invested</strong>. By switching to an HDHP, you unlock access to a <strong>Health Savings Account (HSA)</strong>.</p>
+                    <p>The HSA is the ultimate <strong>triple-tax-advantaged</strong> vehicle. Contributions are pre-tax, growth is tax-free, and withdrawals for medical expenses are tax-free. Unlike an FSA, an HSA rolls over forever. In 2027, we will max this out (IRS Limit ~$4,300/year or ~$358/month) and automatically invest these pre-tax payroll dollars into broad-market index funds.</p>
+                </div>
+                <div class="split-half">
+                    <h3 style="margin-top: 0;">2. Cost Impact: Routine Checkups & Dental</h3>
+                    <p>Based on your provided <code>insurance_info.pdf</code> and <code>Dental Coverage - Aetna.pdf</code> documents, <strong>routine physicals and immunizations are covered at 100%</strong> with no copay and the deductible waived. Your Aetna dental plan covers <strong>2 exams and 2 cleanings per year at 100%</strong>.</p>
+                    <p style="color: #27ae60; font-weight: bold;">Under federal ACA law, HDHPs are legally required to provide this exact same 100% coverage for preventive care before the deductible. Therefore, since you only plan on attending routine checkups in 2027, your extra out-of-pocket cost for doctor and dentist visits will be exactly $0.</p>
+                </div>
+            </div>
+            
+            <div style="background: #f8fbfe; padding: 20px; border-radius: 6px; border-left: 5px solid #2980b9;">
+                <h3 style="margin-top: 0; color: #2980b9;">3. The Verdict: Should you make the switch?</h3>
+                <p><strong>YES. Absolutely.</strong></p>
+                <p><strong>Pros:</strong> You gain lower monthly paystub premiums (increasing cash flow) and unlock the greatest tax-advantaged investment account in existence (the HSA). Routine care remains entirely free.</p>
+                <p><strong>Cons:</strong> If you get sick or injured and need non-preventive care (e.g., counseling, physical therapy, or a specialist), you lose the flat $30-$50 copays shown in your current plan. You will pay the full negotiated rate for those visits until your high deductible is met.</p>
+            </div>
+        </div>
     </div>
 
     
+    <!-- TAB 2: 2027 PLAN -->
     <div id="Plan2027" class="tabcontent">
-    
-    <!-- THE VERDICT BANNER -->
-    <div class="card full-width" style="background: linear-gradient(135deg, #2c3e50, #1a252f); color: white; text-align: center; padding: 40px 20px; border: 4px solid #f1c40f;">
-        <h1 style="color: white; margin-bottom: 10px; font-size: 2.2rem; text-transform: uppercase; letter-spacing: 2px;">The Move-In Verdict</h1>
-        <h2 style="color: #f1c40f; margin-top: 0; margin-bottom: 20px; font-size: 1.8rem; line-height: 1.4;">
-            IF STAYING IN APT <span style="color: #e74c3c;">LESS THAN 4 YEARS</span>: ☀️ AUG '27 WINS.<br>
-            IF STAYING IN APT <span style="color: #27ae60;">MORE THAN 4 YEARS</span>: ❄️ FEB '27 WINS.
-        </h2>
-        <p style="font-size: 1.15rem; max-width: 800px; margin: 0 auto; color: #ecf0f1;">
-            Based on the Inkwell Decatur prices this year, the summer rent gap is much smaller than expected. Delaying my move until August frees up <strong>$12,000</strong> in unspent rent, which saves us roughly <strong>$3,000</strong> in Discover card interest. Because the summer lease premium is only ~$300/month, it will take <strong>50 Months</strong> for moving in the winter to be a better deal.
-        </p>
-    </div>
-
-    <!-- INTERACTIVE MOVE-IN ANALYZER -->
-    <div class="card full-width" style="border: 2px solid #8e44ad; margin-bottom: 30px;">
-        <h2>❄️ Winter vs. ☀️ Summer Move-In Analyzer</h2>
-        <p>Adjust your estimated local rent prices below to find the exact mathematical breakeven point where the long-term cost of a summer lease eclipses the short-term cash advantage of waiting.</p>
         
-        <div class="canvas-grid" style="margin-top: 20px;">
-            <div class="card" style="box-shadow: none; background: #fafafa;">
-                <h3>Market Variables</h3>
-                
-                <div class="slider-group" style="margin-top: 20px;">
-                    <label>Target Winter Rent (Feb) <span class="value-display" id="wRentLabel">$2,000</span></label>
-                    <input type="range" id="wRentInput" min="1500" max="3500" step="50" value="2000">
-                </div>
-                <div class="slider-group">
-                    <label>Target Summer Rent (Aug) <span class="value-display" id="sRentLabel">$2,300</span></label>
-                    <input type="range" id="sRentInput" min="1500" max="4000" step="50" value="2300">
-                </div>
-                <div class="slider-group">
-                    <label>Months Delayed (Feb to Aug) <span class="value-display" id="delayLabel">6 Months</span></label>
-                    <input type="range" id="delayInput" min="1" max="12" step="1" value="6">
-                </div>
-                <div class="slider-group">
-                    <label>Discover Debt APR <span class="value-display" id="aprLabel">18.78%</span></label>
-                    <input type="range" id="aprInput" min="5" max="30" step="0.01" value="18.78">
-                </div>
-            </div>
-
-            <div class="card" style="box-shadow: none; background: #fafafa; display: flex; flex-direction: column; justify-content: center;">
-                <div class="metric-box" style="border-left-color: #3498db;">
-                    <h4>Upfront Cash Retained (If Delayed)</h4>
-                    <div class="metric-value" id="upfrontCalc" style="color: #2980b9;">$12,000</div>
-                </div>
-                <div class="metric-box" style="border-left-color: #27ae60;">
-                    <h4>Est. Avoided CC Interest</h4>
-                    <div class="metric-value" id="intSavedCalc" style="color: #27ae60;">+$2,997</div>
-                </div>
-                <div class="metric-box" style="margin-bottom: 0; border-left-color: #8e44ad;">
-                    <h4>Breakeven Month</h4>
-                    <div class="metric-value" id="breakevenCalc" style="color: #8e44ad;">Month 50</div>
-                </div>
-            </div>
+        <!-- THE VERDICT BANNER -->
+        <div id="verdict-section" class="card full-width" style="background: linear-gradient(135deg, #2c3e50, #1a252f); color: white; text-align: center; padding: 40px 20px; border: 4px solid #f1c40f;">
+            <h1 style="color: white; margin-bottom: 10px; font-size: 2.2rem; text-transform: uppercase; letter-spacing: 2px;">When Should WOODY Move Out?</h1>
+            <h2 style="color: #f1c40f; margin-top: 0; margin-bottom: 20px; font-size: 1.8rem; line-height: 1.4;">
+                IF STAYING IN APT <span style="color: #e74c3c;">LESS THAN 4 YEARS</span>: ☀️ AUG '27 WINS.<br>
+                IF STAYING IN APT <span style="color: #27ae60;">MORE THAN 4 YEARS</span>: ❄️ FEB '27 WINS.
+            </h2>
+            <p style="font-size: 1.15rem; max-width: 800px; margin: 0 auto; color: #ecf0f1;">
+                Based on the Inkwell Decatur prices this year, the summer rent gap is much smaller than expected. Delaying my move until August frees up <strong>$12,000</strong> in unspent rent, which saves us roughly <strong>$3,000</strong> in Discover card interest. Because the summer lease premium is only ~$300/month, it will take <strong>50 Months</strong> for moving in the winter to be a better deal.
+            </p>
         </div>
-        <div class="chart-container" style="height: 300px; margin-top: 20px;">
-            <canvas id="moveInChart"></canvas>
-        </div>
-    </div>
 
-    <!-- TOGGLE BUTTONS -->
-    <div style="display: flex; gap: 15px; margin-bottom: 25px;">
-        <button id="btnWinterToggle" onclick="toggleMoveIn('winter')" style="flex: 1; padding: 15px; font-size: 1.2rem; font-weight: bold; border-radius: 8px; cursor: pointer; border: 3px solid #3498db; background-color: transparent; color: #3498db; transition: 0.3s;">
-            ❄️ February 2027 Move-In
-        </button>
-        <button id="btnSummerToggle" onclick="toggleMoveIn('summer')" style="flex: 1; padding: 15px; font-size: 1.2rem; font-weight: bold; border-radius: 8px; cursor: pointer; border: 3px solid #f39c12; background-color: #f39c12; color: white; transition: 0.3s;">
-            ☀️ August 2027 Move-In
-        </button>
-    </div>
-
-    <!-- WINTER PATH CONTENT -->
-    <div id="winterContent" style="display: none;">
-        <div class="card full-width" style="border-left: 6px solid #3498db; background: #f8fbfe;">
-            <h2 style="color: #2980b9;">Phase 1 & 2: The Winter Move-In</h2>
-            <p>If you choose to move in on February 18, 2027, you lock in the lower baseline rent forever, but you must subsidize 6 months of solo living before your partner integrates.</p>
+        <!-- INTERACTIVE MOVE-IN ANALYZER -->
+        <div id="analyzer-section" class="card full-width" style="border: 2px solid #8e44ad; margin-bottom: 30px;">
+            <h2>❄️ Winter vs. ☀️ Summer Move-In Analyzer</h2>
+            <p>Adjust your estimated local rent prices below to find the exact mathematical breakeven point where the long-term cost of a summer lease eclipses the short-term cash advantage of waiting.</p>
             
-            <div class="split-box" style="background: transparent; border: none; margin-bottom: 0;">
-                <div class="split-half" style="border: 1px solid #ddd; background: #fff; border-radius: 6px; margin-right: 10px;">
-                    <h3 style="margin-top: 0;">1. The Move-In Capital Pipeline</h3>
-                    <p>Your apartment fund officially reaches its peak of <strong>$9,630</strong> exactly on your move-in date.</p>
-                    <ul>
-                        <li><strong>Upfront Furniture:</strong> Capped at $3,000.</li>
-                        <li><strong>Liquid Cushion:</strong> $6,630 remains in your HYSA.</li>
-                    </ul>
-                    <div class="chart-container" style="height: 200px; margin-top: 15px;">
-                        <canvas id="apartmentSavingsChart"></canvas>
+            <div class="canvas-grid" style="margin-top: 20px;">
+                <div class="card" style="box-shadow: none; background: #fafafa;">
+                    <h3>Market Variables</h3>
+                    
+                    <div class="slider-group" style="margin-top: 20px;">
+                        <label>Target Winter Rent (Feb) <span class="value-display" id="wRentLabel">$2,000</span></label>
+                        <input type="range" id="wRentInput" min="1500" max="3500" step="50" value="2000">
+                    </div>
+                    <div class="slider-group">
+                        <label>Target Summer Rent (Aug) <span class="value-display" id="sRentLabel">$2,300</span></label>
+                        <input type="range" id="sRentInput" min="1500" max="4000" step="50" value="2300">
+                    </div>
+                    <div class="slider-group">
+                        <label>Months Delayed (Feb to Aug) <span class="value-display" id="delayLabel">6 Months</span></label>
+                        <input type="range" id="delayInput" min="1" max="12" step="1" value="6">
+                    </div>
+                    <div class="slider-group">
+                        <label>Discover Debt APR <span class="value-display" id="aprLabel">18.78%</span></label>
+                        <input type="range" id="aprInput" min="5" max="30" step="0.01" value="18.78">
                     </div>
                 </div>
+
+                <div class="card" style="box-shadow: none; background: #fafafa; display: flex; flex-direction: column; justify-content: center;">
+                    <div class="metric-box" style="border-left-color: #3498db;">
+                        <h4>Upfront Cash Retained (If Delayed)</h4>
+                        <div class="metric-value" id="upfrontCalc" style="color: #2980b9;">$12,000</div>
+                    </div>
+                    <div class="metric-box" style="border-left-color: #27ae60;">
+                        <h4>Est. Avoided CC Interest</h4>
+                        <div class="metric-value" id="intSavedCalc" style="color: #27ae60;">+$2,997</div>
+                    </div>
+                    <div class="metric-box" style="margin-bottom: 0; border-left-color: #8e44ad;">
+                        <h4>Breakeven Month</h4>
+                        <div class="metric-value" id="breakevenCalc" style="color: #8e44ad;">Month 50</div>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-container" style="height: 300px; margin-top: 20px;">
+                <canvas id="moveInChart"></canvas>
+            </div>
+        </div>
+
+        <!-- TOGGLE BUTTONS -->
+        <div id="paths-section" style="display: flex; gap: 15px; margin-bottom: 25px;">
+            <button id="btnWinterToggle" onclick="toggleMoveIn('winter')" style="flex: 1; padding: 15px; font-size: 1.2rem; font-weight: bold; border-radius: 8px; cursor: pointer; border: 3px solid #3498db; background-color: transparent; color: #3498db; transition: 0.3s;">
+                ❄️ February 2027 Move-In
+            </button>
+            <button id="btnSummerToggle" onclick="toggleMoveIn('summer')" style="flex: 1; padding: 15px; font-size: 1.2rem; font-weight: bold; border-radius: 8px; cursor: pointer; border: 3px solid #f39c12; background-color: #f39c12; color: white; transition: 0.3s;">
+                ☀️ August 2027 Move-In
+            </button>
+        </div>
+
+        <!-- WINTER PATH CONTENT -->
+        <div id="winterContent" style="display: none;">
+            <div class="card full-width" style="border-left: 6px solid #3498db; background: #f8fbfe;">
+                <h2 style="color: #2980b9;">Phase 1 & 2: The Winter Move-In</h2>
+                <p>If you choose to move in on February 18, 2027, you lock in the lower baseline rent forever, but you must subsidize 6 months of solo living before your partner integrates.</p>
                 
-                <div class="split-half" style="border: 1px solid #ddd; background: #fff; border-radius: 6px; margin-left: 10px;">
-                    <h3 style="margin-top: 0;">2. Solo Subsidy Calculator (Mar - Jul)</h3>
-                    <p style="font-size: 0.85rem; color: #7f8c8d;">Based on a $297.60 base monthly deficit after core bills are paid.</p>
-                    <div class="slider-group" style="margin-top: 15px;">
-                        <label>Monthly Withdrawal from $6,630 Savings <span class="value-display" id="withdrawLabel">$800</span></label>
-                        <input type="range" id="withdrawInput" min="300" max="1100" step="10" value="800">
+                <div class="split-box" style="background: transparent; border: none; margin-bottom: 0;">
+                    <div class="split-half" style="border: 1px solid #ddd; background: #fff; border-radius: 6px; margin-right: 10px;">
+                        <h3 style="margin-top: 0;">1. The Move-In Capital Pipeline</h3>
+                        <p>Your apartment fund officially reaches its peak of <strong>$9,630</strong> exactly on your move-in date.</p>
+                        <ul>
+                            <li><strong>Upfront Furniture:</strong> Capped at $3,000.</li>
+                            <li><strong>Liquid Cushion:</strong> $6,630 remains in your HYSA.</li>
+                        </ul>
+                        <div class="chart-container" style="height: 200px; margin-top: 15px;">
+                            <canvas id="apartmentSavingsChart"></canvas>
+                        </div>
                     </div>
-                    <div class="metric-box" style="margin-bottom: 10px; padding: 10px;">
-                        <h4>Guilt-Free Monthly Spending</h4>
-                        <div class="metric-value" id="guiltFreeCalc" style="font-size: 1.3rem;">$502.40</div>
-                    </div>
-                    <div class="metric-box" style="margin-bottom: 0; padding: 10px;">
-                        <h4>Leftover Savings (August 1st)</h4>
-                        <div class="metric-value" id="remainingSavingsCalc" style="font-size: 1.3rem;">$1,830.00</div>
+                    
+                    <div class="split-half" style="border: 1px solid #ddd; background: #fff; border-radius: 6px; margin-left: 10px;">
+                        <h3 style="margin-top: 0;">2. Solo Subsidy Calculator (Mar - Jul)</h3>
+                        <p style="font-size: 0.85rem; color: #7f8c8d;">Based on a $297.60 base monthly deficit after core bills are paid.</p>
+                        <div class="slider-group" style="margin-top: 15px;">
+                            <label>Monthly Withdrawal from $6,630 Savings <span class="value-display" id="withdrawLabel">$800</span></label>
+                            <input type="range" id="withdrawInput" min="300" max="1100" step="10" value="800">
+                        </div>
+                        <div class="metric-box" style="margin-bottom: 10px; padding: 10px;">
+                            <h4>Guilt-Free Monthly Spending</h4>
+                            <div class="metric-value" id="guiltFreeCalc" style="font-size: 1.3rem;">$502.40</div>
+                        </div>
+                        <div class="metric-box" style="margin-bottom: 0; padding: 10px;">
+                            <h4>Leftover Savings (August 1st)</h4>
+                            <div class="metric-value" id="remainingSavingsCalc" style="font-size: 1.3rem;">$1,830.00</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- SUMMER PATH CONTENT -->
-    <div id="summerContent" style="display: block;">
-        <div class="card full-width" style="border-left: 6px solid #f39c12; background: #fffdf8;">
-            <h2 style="color: #d35400;">Phase 1 & 2: The Summer Move-In (Mathematical Winner)</h2>
-            <p>By delaying moving out until August 2027, you completely skip the "Solo Subsidy" phase. You and your partner move in together on day one, and you utilize the 6-month delay to execute a massive debt strike.</p>
-            
-            <div class="split-box" style="background: transparent; border: none; margin-bottom: 0;">
-                <div class="split-half" style="border: 1px solid #ddd; background: #fff; border-radius: 6px; margin-right: 10px;">
-                    <h3 style="margin-top: 0;">1. The Discover Card Strike (Oct '26 - Jul '27)</h3>
-                    <p><strong>CRITICAL PIVOT:</strong> Because the Apple Card is mathematically projected to be zeroed out in October 2026, the full <strong>$2,000/month</strong> paydown allocation is completely liberated.</p>
-                    <div style="background: #fdf2e9; border-left: 4px solid #e67e22; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
-                        <p style="margin: 0; font-size: 0.95rem; font-weight: bold; color: #d35400;">Starting October 2026, a full $2,000/month will be diverted directly toward the Discover Card.</p>
+        <!-- SUMMER PATH CONTENT -->
+        <div id="summerContent" style="display: block;">
+            <div class="card full-width" style="border-left: 6px solid #f39c12; background: #fffdf8;">
+                <h2 style="color: #d35400;">Phase 1 & 2: The Summer Move-In (Mathematical Winner)</h2>
+                <p>By delaying moving out until August 2027, you completely skip the "Solo Subsidy" phase. You and your partner move in together on day one, and you utilize the 6-month delay to execute a massive debt strike.</p>
+                
+                <div class="split-box" style="background: transparent; border: none; margin-bottom: 0;">
+                    <div class="split-half" style="border: 1px solid #ddd; background: #fff; border-radius: 6px; margin-right: 10px;">
+                        <h3 style="margin-top: 0;">1. The Discover Card Strike (Oct '26 - Jul '27)</h3>
+                        <p><strong>CRITICAL PIVOT:</strong> Because the Apple Card is mathematically projected to be zeroed out in October 2026, the full <strong>$2,000/month</strong> paydown allocation is completely liberated.</p>
+                        <div style="background: #fdf2e9; border-left: 4px solid #e67e22; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
+                            <p style="margin: 0; font-size: 0.95rem; font-weight: bold; color: #d35400;">Starting October 2026, a full $2,000/month will be diverted directly toward the Discover Card.</p>
+                        </div>
+                        <ul>
+                            <li><strong>Cash Injected:</strong> Generates over $12,000+ in massive principal damage before you ever sign a lease.</li>
+                            <li><strong>Immediate Impact:</strong> Vaporizes nearly the entire Discover balance instantly, saving thousands in compounding interest.</li>
+                        </ul>
                     </div>
-                    <ul>
-                        <li><strong>Cash Injected:</strong> Generates over $12,000+ in massive principal damage before you ever sign a lease.</li>
-                        <li><strong>Immediate Impact:</strong> Vaporizes nearly the entire Discover balance instantly, saving thousands in compounding interest.</li>
-                    </ul>
-                </div>
-                
-                <div class="split-half" style="border: 1px solid #ddd; background: #fff; border-radius: 6px; margin-left: 10px;">
-                    <h3 style="margin-top: 0;">2. Immediate Integration (August)</h3>
-                    <p>You bypass the need for a $6,630 safety cushion entirely. Both incomes merge immediately upon signing the lease at Inkwell Decatur or a similar complex.</p>
-                    <ul>
-                        <li><strong>The Trade-Off:</strong> Your fixed living expenses will sit around ~$2,300/month ($2,047 base + utilities). Because your combined incomes easily clear $7,900, you can absorb this premium effortlessly without sacrificing your investment rate.</li>
-                    </ul>
+                    
+                    <div class="split-half" style="border: 1px solid #ddd; background: #fff; border-radius: 6px; margin-left: 10px;">
+                        <h3 style="margin-top: 0;">2. Immediate Integration (August)</h3>
+                        <p>You bypass the need for a $6,630 safety cushion entirely. Both incomes merge immediately upon signing the lease at Inkwell Decatur or a similar complex.</p>
+                        <ul>
+                            <li><strong>The Trade-Off:</strong> Your fixed living expenses will sit around ~$2,300/month ($2,047 base + utilities). Because your combined incomes easily clear $7,900, you can absorb this premium effortlessly without sacrificing your investment rate.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- SHARED PHASE: MERGING & GROWING (WITH INTERACTIVE EXPENSES) -->
-    <div class="card full-width">
-        <h2>Phase 3: Moving In Together !!!(August 2027+)</h2>
-        <p>Regardless of the timeline, August 2027 marks the official merging of our household finances. With a combined net income of <strong>$7,956.40</strong> per month, we can easily handle the heavy lifting. Use the interactive calculator below to see exactly how our monthly living expenses impact our investment buffer.</p>
-        
-        <div class="canvas-grid" style="margin-top: 20px;">
+        <!-- 2027 PROJECTED TAKE-HOME PAY -->
+        <div id="takehome-section" class="card full-width" style="border: 2px solid #27ae60;">
+            <h2>💸 2027 Projected Take-Home Pay Estimate</h2>
+            <p>Based on your 2026 base salary of $94,238.82, a standard 3% merit increase in March 2027 will bump your gross pay to <strong>$97,065.98/year ($8,088.83/month)</strong>. Here is exactly what your monthly net take-home pay will look like once your new 9% Roth 401(k) and HDHP/HSA benefits kick in.</p>
             
-            <!-- Interactive Sliders -->
-            <div class="card" style="box-shadow: none; background: #fafafa;">
-                <h3 style="margin-top: 0;">Interactive Fixed Expenses</h3>
-                
-                <div class="slider-group">
-                    <label>Rent <span class="value-display" id="expRentLabel">$2,110</span></label>
-                    <input type="range" id="expRent" min="1500" max="4000" step="1" value="2110">
-                </div>
-                <div class="slider-group">
-                    <label>Utilities <span class="value-display" id="expUtilLabel">$250</span></label>
-                    <input type="range" id="expUtil" min="50" max="500" step="10" value="250">
-                </div>
-                <div class="slider-group">
-                    <label>Car + Insurance <span class="value-display" id="expCarLabel">$950</span></label>
-                    <input type="range" id="expCar" min="0" max="1000" step="10" value="950">
-                </div>
-                <div class="slider-group">
-                    <label>Groceries <span class="value-display" id="expGrocLabel">$400</span></label>
-                    <input type="range" id="expGroc" min="200" max="1500" step="50" value="400">
-                </div>
-                <div class="slider-group">
-                    <label>Clothes <span class="value-display" id="expClothLabel">$50</span></label>
-                    <input type="range" id="expCloth" min="0" max="500" step="10" value="50">
-                </div>
-                <div class="slider-group">
-                    <label>Phone <span class="value-display" id="expPhoneLabel">$70</span></label>
-                    <input type="range" id="expPhone" min="50" max="300" step="10" value="70">
-                </div>
-                <div class="slider-group" style="margin-bottom: 5px;">
-                    <label>Subscriptions <span class="value-display" id="expSubLabel">$100</span></label>
-                    <input type="range" id="expSub" min="0" max="500" step="10" value="100">
-                </div>
-                
-                <hr style="border: none; border-top: 1px solid #ccc; margin: 15px 0;">
-                
-                <div style="display: flex; justify-content: space-between; font-weight: bold; color: var(--primary);">
-                    <span>+ Automatic 8% Misc Allocation:</span>
-                    <span id="expMiscCalc">$320.56</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-weight: bold; color: #c0392b; font-size: 1.2rem; margin-top: 5px;">
-                    <span>Total Monthly Fixed:</span>
-                    <span id="expTotalCalc">$4,327.56</span>
-                </div>
+            <div style="overflow-x: auto; margin-top: 15px;">
+                <table>
+                    <tr>
+                        <th style="width: 60%;">Deduction / Allocation</th>
+                        <th style="width: 40%; text-align: right;">Amount</th>
+                    </tr>
+                    <tr>
+                        <td><strong>New Monthly Gross Pay</strong></td>
+                        <td style="text-align: right; font-weight: bold; color: #2980b9;">$8,088.83</td>
+                    </tr>
+                    <tr>
+                        <td>HSA Deduction (Pre-Tax, to hit $4,300 IRS Max)</td>
+                        <td style="text-align: right; color: #c0392b;">-$358.33</td>
+                    </tr>
+                    <tr>
+                        <td>Medical Premiums (Pre-Tax HDHP Estimate)</td>
+                        <td style="text-align: right; color: #c0392b;">-$100.00</td>
+                    </tr>
+                    <tr>
+                        <td>Taxes (Federal, GA State, FICA Estimate)</td>
+                        <td style="text-align: right; color: #c0392b;">-$1,928.29</td>
+                    </tr>
+                    <tr>
+                        <td>Roth 401(k) Contribution (9% Post-Tax)</td>
+                        <td style="text-align: right; color: #c0392b;">-$727.99</td>
+                    </tr>
+                    <tr style="background-color: #e8f6f3; font-size: 1.1rem;">
+                        <td><strong>Final Estimated Monthly Net Take-Home</strong></td>
+                        <td style="text-align: right; font-weight: bold; color: #27ae60;">~$4,974.22</td>
+                    </tr>
+                </table>
             </div>
-
-            <!-- Dynamic Output & Pie Chart -->
-            <div class="card" style="box-shadow: none; background: #fafafa; display: flex; flex-direction: column;">
-                <h3 style="margin-top: 0; text-align: center;">Cash Flow Distribution</h3>
-                <div class="chart-container small-chart" style="height: 250px;">
-                    <canvas id="integrationPieChart"></canvas>
-                </div>
-                
-                <div style="margin-top: 20px;">
-                    <ul style="font-size: 0.95rem; margin-bottom: 0;">
-                        <li><span style="color:#e74c3c; font-weight:bold;">Fixed Living:</span> Dynamically calculated.</li>
-                        <li><span style="color:#3498db; font-weight:bold;">Core Savings ($1,500):</span> For shared milestones.</li>
-                        <li><span style="color:#27ae60; font-weight:bold;">Investments ($1,000):</span> Brokerage & Roth IRAs.</li>
-                        <li><span style="color:#f39c12; font-weight:bold;">Debt Blitz ($950):</span> Eradicating final balances.</li>
-                        <li id="bufferListItem"><span style="color:#9b59b6; font-weight:bold;">Remaining Buffer:</span> <span id="bufferOutputText">$178.84</span></li>
-                    </ul>
-                </div>
-            </div>
-            
+            <p style="font-size: 0.9rem; color: #7f8c8d; margin-top: 10px;">* This ~$4,974 monthly net provides the baseline for your solo subsidy phase and your shared household contributions.</p>
         </div>
+
+        <!-- INVESTMENT ORDER OF OPERATIONS (THE WATERFALL) -->
+        <div id="waterfall-section" class="card full-width" style="border: 2px solid var(--primary);">
+            <h2>📅 2027 Investment Order of Operations (The Waterfall)</h2>
+            <p>This outlines the exact priority sequence for deploying your capital across Pre-Tax and Post-Tax vehicles, dynamically adjusting based on the time of the year (Solo Phase vs. Integrated living).</p>
+            
+            <div style="overflow-x: auto;">
+                <table>
+                    <tr>
+                        <th style="width: 15%;">Time of Year</th>
+                        <th style="width: 25%;">Priority Level</th>
+                        <th style="width: 20%;">Tax Status</th>
+                        <th style="width: 40%;">Allocation & Strategy</th>
+                    </tr>
+                    <!-- H1: Jan - July -->
+                    <tr style="background-color: #fcfcfc;">
+                        <td rowspan="4" style="border-bottom: 2px solid #ccc;"><strong>H1 2027<br>(Jan – Jul)</strong><br><small><em>The Solo Phase</em></small></td>
+                        <td><strong>Priority 1: 401(k) Match</strong></td>
+                        <td><span style="color: #2980b9; font-weight: bold;">Post-Tax</span></td>
+                        <td><strong>9% Roth 401(k)</strong>. Captures the full 6% company match. This runs on autopilot directly from your paycheck.</td>
+                    </tr>
+                    <tr style="background-color: #fcfcfc;">
+                        <td><strong>Priority 2: Individual HSA</strong></td>
+                        <td><span style="color: #27ae60; font-weight: bold;">Pre-Tax</span></td>
+                        <td><strong>~$358.33/mo (2027 IRS Max)</strong>. Autopilot via payroll. Invested immediately into broad market index funds (e.g., VT) for triple-tax advantaged growth.</td>
+                    </tr>
+                    <tr style="background-color: #fcfcfc;">
+                        <td><strong>Priority 3: Liquid Cash</strong></td>
+                        <td><span style="color: #2980b9; font-weight: bold;">Post-Tax</span></td>
+                        <td><strong>HYSA Focus</strong>. Priorities shift based on your move-in choice. If moving in Feb, cash is used as a monthly solo-subsidy. If moving in Aug, cash is hurled at the Discover Card.</td>
+                    </tr>
+                    <tr style="background-color: #fcfcfc; border-bottom: 2px solid #ccc;">
+                        <td><strong>Priority 4: Manual Markets</strong></td>
+                        <td>-</td>
+                        <td><strong>Paused</strong> to maintain cash flow and guilt-free spending during the high-leverage debt and transition phase.</td>
+                    </tr>
+                    <!-- H2: Aug - Dec -->
+                    <tr style="background-color: #e8f6f3;">
+                        <td rowspan="5"><strong>H2 2027<br>(Aug – Dec)</strong><br><small><em>Partner Integration</em></small></td>
+                        <td><strong>Priority 1: 401(k) Match</strong></td>
+                        <td><span style="color: #2980b9; font-weight: bold;">Post-Tax</span></td>
+                        <td><strong>9% Roth 401(k)</strong>. Continues on autopilot via payroll.</td>
+                    </tr>
+                    <tr style="background-color: #e8f6f3;">
+                        <td><strong>Priority 2: Individual HSA</strong></td>
+                        <td><span style="color: #27ae60; font-weight: bold;">Pre-Tax</span></td>
+                        <td><strong>~$358.33/mo</strong>. Continues on autopilot via payroll. <em>(Will scale up to Family Max in 2029).</em></td>
+                    </tr>
+                    <tr style="background-color: #e8f6f3;">
+                        <td><strong>Priority 3: Milestone Cash</strong></td>
+                        <td><span style="color: #2980b9; font-weight: bold;">Post-Tax</span></td>
+                        <td><strong>$1,500/mo to HYSA</strong>. Capitalizing the Wedding, Emergency, and Vacation funds from the newly combined household surplus.</td>
+                    </tr>
+                    <tr style="background-color: #e8f6f3;">
+                        <td><strong>Priority 4: Roth IRA</strong></td>
+                        <td><span style="color: #2980b9; font-weight: bold;">Post-Tax</span></td>
+                        <td><strong>$636/mo to FFIJX</strong>. Maxing out the tax-free retirement growth vehicle.</td>
+                    </tr>
+                    <tr style="background-color: #e8f6f3;">
+                        <td><strong>Priority 5: Taxable Bridge</strong></td>
+                        <td><span style="color: #2980b9; font-weight: bold;">Post-Tax</span></td>
+                        <td><strong>$364/mo to VTI/VXUS</strong>. Building the penalty-free Coast FIRE bridge fund in your individual brokerage.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- SHARED PHASE: MERGING & GROWING (WITH INTERACTIVE EXPENSES) -->
+        <div id="integration-section" class="card full-width">
+            <h2>Phase 3: Moving In Together !!! (August 2027+)</h2>
+            <p>Regardless of the timeline, August 2027 marks the official merging of our household finances. With a combined net income of <strong>$7,956.40</strong> per month, we can easily handle the heavy lifting. Use the interactive calculator below to see exactly how our monthly living expenses impact our investment buffer.</p>
+            
+            <div class="canvas-grid" style="margin-top: 20px;">
+                
+                <!-- Interactive Sliders -->
+                <div class="card" style="box-shadow: none; background: #fafafa;">
+                    <h3 style="margin-top: 0;">Interactive Fixed Expenses</h3>
+                    
+                    <div class="slider-group">
+                        <label>Rent <span class="value-display" id="expRentLabel">$2,110</span></label>
+                        <input type="range" id="expRent" min="1500" max="4000" step="1" value="2110">
+                    </div>
+                    <div class="slider-group">
+                        <label>Utilities <span class="value-display" id="expUtilLabel">$250</span></label>
+                        <input type="range" id="expUtil" min="50" max="500" step="10" value="250">
+                    </div>
+                    <div class="slider-group">
+                        <label>Car + Insurance <span class="value-display" id="expCarLabel">$950</span></label>
+                        <input type="range" id="expCar" min="0" max="1000" step="10" value="950">
+                    </div>
+                    <div class="slider-group">
+                        <label>Groceries <span class="value-display" id="expGrocLabel">$400</span></label>
+                        <input type="range" id="expGroc" min="200" max="1500" step="50" value="400">
+                    </div>
+                    <div class="slider-group">
+                        <label>Clothes <span class="value-display" id="expClothLabel">$50</span></label>
+                        <input type="range" id="expCloth" min="0" max="500" step="10" value="50">
+                    </div>
+                    <div class="slider-group">
+                        <label>Phone <span class="value-display" id="expPhoneLabel">$70</span></label>
+                        <input type="range" id="expPhone" min="50" max="300" step="10" value="70">
+                    </div>
+                    <div class="slider-group" style="margin-bottom: 5px;">
+                        <label>Subscriptions <span class="value-display" id="expSubLabel">$100</span></label>
+                        <input type="range" id="expSub" min="0" max="500" step="10" value="100">
+                    </div>
+                    
+                    <hr style="border: none; border-top: 1px solid #ccc; margin: 15px 0;">
+                    
+                    <div style="display: flex; justify-content: space-between; font-weight: bold; color: var(--primary);">
+                        <span>+ Automatic 8% Misc Allocation:</span>
+                        <span id="expMiscCalc">$314.40</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-weight: bold; color: #c0392b; font-size: 1.2rem; margin-top: 5px;">
+                        <span>Total Monthly Fixed:</span>
+                        <span id="expTotalCalc">$4,244.40</span>
+                    </div>
+                </div>
+
+                <!-- Dynamic Output & Pie Chart -->
+                <div class="card" style="box-shadow: none; background: #fafafa; display: flex; flex-direction: column;">
+                    <h3 style="margin-top: 0; text-align: center;">Cash Flow Distribution</h3>
+                    <div class="chart-container small-chart" style="height: 250px;">
+                        <canvas id="integrationPieChart"></canvas>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <ul style="font-size: 0.95rem; margin-bottom: 0;">
+                            <li><span style="color:#e74c3c; font-weight:bold;">Fixed Living:</span> Dynamically calculated.</li>
+                            <li><span style="color:#3498db; font-weight:bold;">Core Savings ($1,500):</span> For shared milestones.</li>
+                            <li><span style="color:#27ae60; font-weight:bold;">Investments ($1,000):</span> HSA & Roth IRAs.</li>
+                            <li><span style="color:#f39c12; font-weight:bold;">Debt Blitz ($950):</span> Eradicating final balances.</li>
+                            <li id="bufferListItem"><span style="color:#9b59b6; font-weight:bold;">Remaining Buffer:</span> <span id="bufferOutputText">$262.00</span></li>
+                        </ul>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- CORE SAVINGS ALLOCATOR -->
+        <div id="savings-section" class="card full-width" style="border: 2px solid var(--accent);">
+            <h2>🏦 Core Savings Pipeline (End-of-Year Projections)</h2>
+            <p>Your combined budget designates <strong>$1,500 per month</strong> strictly for cash savings starting in August. Adjust the sliders below to see how shifting your monthly allocation alters your available capital at the end of a full 12-month cycle. <em>(The Wedding projection automatically includes your $7,600 after-tax March corporate bonus).</em></p>
+            
+            <div class="canvas-grid" style="margin-top: 20px;">
+                <div class="card" style="box-shadow: none; background: #fafafa;">
+                    <h3>Monthly Allocation</h3>
+                    <div id="allocWarning" style="margin-bottom: 15px; font-weight: bold; font-size: 0.9rem;"></div>
+                    
+                    <div class="slider-group">
+                        <label>Wedding & Ring Fund <span class="value-display" id="wedAllocLabel">$1,000</span></label>
+                        <input type="range" id="wedAllocInput" min="0" max="1500" step="50" value="1000">
+                    </div>
+
+                    <div class="slider-group">
+                        <label>Emergency Reserves <span class="value-display" id="emgAllocLabel">$300</span></label>
+                        <input type="range" id="emgAllocInput" min="0" max="1500" step="50" value="300">
+                    </div>
+
+                    <div class="slider-group">
+                        <label>Vacation & Travel <span class="value-display" id="vacAllocLabel">$200</span></label>
+                        <input type="range" id="vacAllocInput" min="0" max="1500" step="50" value="200">
+                    </div>
+                </div>
+
+                <div class="card" style="box-shadow: none; background: #fafafa; display: flex; flex-direction: column; justify-content: center;">
+                    <div class="metric-box">
+                        <h4>Wedding Fund (12 Mo. + $7.6k Bonus)</h4>
+                        <div class="metric-value" id="wedProjCalc" style="color: var(--accent);">$19,600</div>
+                    </div>
+                    <div class="metric-box">
+                        <h4>Emergency Reserves (12 Mo.)</h4>
+                        <div class="metric-value" id="emgProjCalc">$3,600</div>
+                    </div>
+                    <div class="metric-box" style="margin-bottom: 0;">
+                        <h4>Vacation Fund (12 Mo.)</h4>
+                        <div class="metric-value" id="vacProjCalc">$2,400</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CORE INVESTMENTS BREAKDOWN -->
+        <div id="investments-section" class="card full-width">
+            <h2>📈 Core Investments & Capital Deployment</h2>
+            <p>The remaining <strong>$1,000 per month</strong> of your manual wealth-building budget is deployed directly into the market starting in August 2027. This long-term compounding strategy is cleanly focused on the engines below.</p>
+
+            <div class="split-box" style="margin-top: 20px; flex-wrap: wrap;">
+                <div class="split-half" style="border-right: none; border-bottom: 1px solid #ddd; min-width: 100%;">
+                    <h3 style="margin-top: 0; color: var(--primary);">1. Combined Roth IRAs ($636 / month)</h3>
+                    <p><strong>The Asset:</strong> Fidelity Freedom Index 2065 Fund (FFIJX)</p>
+                    <p><strong>The Strategy:</strong> This is your primary retirement engine. FFIJX is a target-date index fund that automatically balances your exposure across global equities and shifts to a more conservative bond mix as you approach the year 2065. Because it is funded with post-tax money inside a Roth IRA, every dollar of growth—and every withdrawal made in retirement—is 100% tax-free.</p>
+                </div>
+
+                <div class="split-half" style="min-width: 100%;">
+                    <h3 style="margin-top: 0; color: var(--primary);">2. Individual Brokerage Account ($364 / month)</h3>
+                    <p><strong>The Asset:</strong> Diversified Index Funds / Dividend Growth (e.g., VTI, VXUS)</p>
+                    <p><strong>The Strategy:</strong> This taxable account serves as your critical "Bridge Fund." If you execute your Coast FIRE transition at age 45, you will be nearly 15 years away from legally accessing your 401(k) without IRS penalties. Building a highly liquid, post-tax brokerage account guarantees you have penalty-free capital to live on during your early semi-retirement years.</p>
+                </div>
+            </div>
+        </div>
+
     </div>
-</div>
     
 
     <!-- TAB 3: 2028 PLAN -->
@@ -954,6 +1186,28 @@
             winterBtn.style.backgroundColor = 'transparent';
             winterBtn.style.color = '#3498db';
         }
+    }
+
+    // ==========================================
+    // Sticky Nav Shadow Observer (Fixed)
+    // ==========================================
+    function initStickyNavObserver() {
+        const sentinel = document.getElementById('nav-sentinel');
+        const tabNav = document.querySelector('.tab');
+        
+        if (!sentinel || !tabNav) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            // If the invisible sentinel leaves the top of the screen, turn on the shadow
+            if (!entries[0].isIntersecting) {
+                tabNav.classList.add('is-pinned');
+            } else {
+                // If the sentinel comes back down into view, remove the shadow
+                tabNav.classList.remove('is-pinned');
+            }
+        }, { threshold: 0 }); // Triggers the exact moment it crosses the threshold
+
+        observer.observe(sentinel);
     }
 
     // ==========================================
@@ -1579,6 +1833,9 @@
         recalculateDashboard();
         recalculateCC();
         recalculateDiscover();
+        
+        // Initialize the new sticky nav observer
+        initStickyNavObserver();
     };
 </script>
 </body>
